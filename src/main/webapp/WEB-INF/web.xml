@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <display-name>Archetype Created Web Application</display-name>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>base</param-value>
+    </context-param>
+
+    <!-- servlet for test -->
+    <servlet>
+        <servlet-name>Test</servlet-name>
+        <servlet-class>com.yjh.base.server.TestServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Test</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+
+    <!-- spring config -->
+    <servlet>
+        <servlet-name>springDispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/resources/spring/spring-main.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springDispatcher</servlet-name>
+        <url-pattern>/m/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- session config -->
+    <session-config>
+        <session-timeout>30</session-timeout> <!-- default value of tomcat -->
+        <cookie-config>
+            <!--<name>JSESSIONID</name>-->
+            <!--<domain>example.com</domain>-->
+            <!--<path>/</path>-->
+            <comment>Keep you logged in.See our privacy policy for more information.</comment>
+            <http-only>true</http-only>
+            <secure>false</secure>
+            <!--<max-age>1800</max-age>-->
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+        <!--<tracking-mode>URL</tracking-mode>-->
+        <!--<tracking-mode>SSL</tracking-mode>-->
+    </session-config>
+
+    <!-- jsp config -->
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>/WEB-INF/*</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+            <scripting-invalid>false</scripting-invalid>
+            <include-prelude>/WEB-INF/m/header.jsp</include-prelude>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+            <default-content-type>text/html;charset=UTF-8</default-content-type>
+        </jsp-property-group>
+    </jsp-config>
+</web-app>
