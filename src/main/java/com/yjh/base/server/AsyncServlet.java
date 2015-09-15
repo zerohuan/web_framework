@@ -25,7 +25,7 @@ public class AsyncServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        //´´½¨IDÉú³ÉÆ÷
+        //åˆ›å»ºIDç”Ÿæˆå™¨
         generator = NumberGeneratorFactory.create(new StepNormalConfig(true, 1, 1, Integer.MAX_VALUE, NormalGenerator.class));
     }
 

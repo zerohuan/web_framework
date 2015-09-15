@@ -6,9 +6,10 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <display-name>Archetype Created Web Application</display-name>
 
+    <!-- 国际化配置 -->
     <context-param>
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-        <param-value>base</param-value>
+        <param-value>/com/yjh/resources/base</param-value>
     </context-param>
 
     <!-- servlet for test -->
