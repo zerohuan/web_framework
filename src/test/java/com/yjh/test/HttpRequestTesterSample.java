@@ -9,6 +9,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ import java.util.List;
  * Created by yjh on 2015/9/3.
  */
 public class HttpRequestTesterSample {
+    private static Logger logger = LogManager.getLogger();
+
     @Test
     public void test() throws Exception {
         HttpPost httpRequest = new HttpPost(Contants.BASE_URL + "/test");
@@ -35,7 +39,7 @@ public class HttpRequestTesterSample {
             HttpEntity httpEntity = httpResponse.getEntity();
             result = EntityUtils.toString(httpEntity);
 
-            System.out.println(result);
+            logger.debug(result);
         }
     }
 }

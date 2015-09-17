@@ -24,12 +24,10 @@ import java.util.zip.GZIPOutputStream;
  * Created by yjh on 2015/9/15.
  */
 public class CompressFilter implements Filter {
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
-    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
@@ -37,12 +35,30 @@ public class CompressFilter implements Filter {
         //check Accept-Encoding Header contains gzip or not
         String acceptEncodingHeader = request.getHeader("Accept-Encoding");
         if(!StringUtil.isEmpty(acceptEncodingHeader) && acceptEncodingHeader.toLowerCase().contains("gzip")) {
+            //add response header
+            response.setHeader("Content-Encoding", "gzip");
             //compress
+            //you can see decoration model is a popular design model
+            ResponseWrapper wrapper = new ResponseWrapper(response);
+            //doFilter, close writer
+            try {
+                filterChain.doFilter(request, wrapper);
+            } finally {
+                try {
+                    wrapper.finish();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
+            }
         } else {
             //without compress
-
+            filterChain.doFilter(servletRequest, servletResponse);
         }
+
+    }
+
+    public void destroy() {
 
     }
 
@@ -88,7 +104,7 @@ public class CompressFilter implements Filter {
                 this.outputStream = new GZIPServletOutputStream(super.getOutputStream());
                 this.writer = new PrintWriter(new OutputStreamWriter(this.outputStream, this.getCharacterEncoding()));
             }
-            return super.getWriter();
+            return this.writer;
         }
 
         @Override
@@ -225,8 +241,5 @@ public class CompressFilter implements Filter {
         }
     }
 
-    @Override
-    public void destroy() {
 
-    }
 }

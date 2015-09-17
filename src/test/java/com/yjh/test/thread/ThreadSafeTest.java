@@ -1,5 +1,8 @@
 package com.yjh.test.thread;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
@@ -7,6 +10,8 @@ import java.util.concurrent.*;
  * Created by yjh on 2015/9/11.
  */
 public class ThreadSafeTest {
+    private static Logger logger = LogManager.getLogger();
+
     static class TaskWithResult implements Callable<String> {
         protected static int i = 1;
         final protected int id = i++;
@@ -33,7 +38,7 @@ public class ThreadSafeTest {
             public void run() {
                 for(Future<String> fs : results) {
                     try {
-                        System.out.println(fs.get());
+                        logger.debug(fs.get());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
@@ -50,7 +55,7 @@ public class ThreadSafeTest {
         private int count = 10;
         public String call() throws Exception {
             while(count-- > 0) {
-                System.out.println(status());
+                logger.debug(status());
                 TimeUnit.MILLISECONDS.sleep(100);
             }
             return "#" + id + " end.";
@@ -95,7 +100,7 @@ public class ThreadSafeTest {
                         Thread.yield();
                     }
                 }
-                System.out.println(this);
+                logger.debug(this);
                 if(countDown-- == 0) return;
             }
         }
@@ -118,7 +123,7 @@ public class ThreadSafeTest {
     public void testSelfSetDaemon() {
         Thread thread = new Thread(new SelfSetDaemon());
         thread.start();
-        System.out.println(thread.isDaemon());
+        logger.debug(thread.isDaemon());
     }
 
     class SelfManagerRunnbale implements Runnable {
@@ -143,10 +148,10 @@ public class ThreadSafeTest {
             try {
                 sleep(duration);
             } catch (InterruptedException e) {
-                System.out.println(getName() + "was interrupted. isInterrupted():" + isInterrupted());
+                logger.debug(getName() + "was interrupted. isInterrupted():" + isInterrupted());
                 return;
             }
-            System.out.println(getName() + "was awakened.");
+            logger.debug(getName() + "was awakened.");
         }
     }
 
@@ -164,9 +169,9 @@ public class ThreadSafeTest {
             try {
                 sleeper.join();
             } catch (InterruptedException e) {
-                System.out.println("interrupted");
+                logger.debug("interrupted");
             }
-            System.out.println(getName() + " complete.");
+            logger.debug(getName() + " complete.");
         }
     }
 
@@ -188,14 +193,14 @@ public class ThreadSafeTest {
     class RuntimeExceptionTask implements Runnable {
         public void run() {
             Thread t = Thread.currentThread();
-            System.out.println("getUncaughtExceptionHandler: " + t.getUncaughtExceptionHandler());
+            logger.debug("getUncaughtExceptionHandler: " + t.getUncaughtExceptionHandler());
             throw new RuntimeException("runtimeException from another thread.");
         }
     }
 
     class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
         public void uncaughtException(Thread t, Throwable e) {
-            System.out.println("Exception: " + e.getMessage());
+            logger.debug("Exception: " + e.getMessage());
         }
     }
 
@@ -231,7 +236,7 @@ public class ThreadSafeTest {
         public void g() throws Exception{
             synchronized (syncB) {
                 for(int i = 0; i < 5; i++) {
-                    System.out.println("g_a" + " " + i);
+                    logger.debug("g_a" + " " + i);
                     TimeUnit.MILLISECONDS.sleep(200);
                 }
             }
@@ -239,7 +244,7 @@ public class ThreadSafeTest {
 
         public synchronized void f() throws Exception {
             for(int i = 0; i < 5; i++) {
-                System.out.println("f_a" + " " + i);
+                logger.debug("f_a" + " " + i);
                 TimeUnit.MILLISECONDS.sleep(200);
             }
         }
@@ -248,7 +253,7 @@ public class ThreadSafeTest {
     static class SyncB extends Sync {
         public synchronized void g() throws Exception {
             for(int i = 0; i < 5; i++) {
-                System.out.println("g_b" + " " + i);
+                logger.debug("g_b" + " " + i);
                 TimeUnit.MILLISECONDS.sleep(200);
             }
         }

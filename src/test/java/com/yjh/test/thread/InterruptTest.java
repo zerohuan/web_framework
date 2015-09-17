@@ -1,5 +1,8 @@
 package com.yjh.test.thread;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
@@ -16,14 +19,16 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by yjh on 2015/9/13.
  */
 public class InterruptTest {
+    private static Logger logger = LogManager.getLogger();
+
     static class SleepBlocked implements Runnable {
         public void run() {
             try {
                 TimeUnit.SECONDS.sleep(100);
             } catch (InterruptedException e) {
-                System.out.println("Interrupted from Sleeping");
+                logger.debug("Interrupted from Sleeping");
             }
-            System.out.println("Exiting from Sleeping");
+            logger.debug("Exiting from Sleeping");
         }
     }
 
@@ -39,11 +44,11 @@ public class InterruptTest {
                 in.read();
             } catch (IOException e) {
                 if(Thread.currentThread().isInterrupted())
-                    System.out.println("It's interrupted.");
+                    logger.debug("It's interrupted.");
                 else
                     throw new RuntimeException(e);
             }
-            System.out.println("Exiting from io blocked.");
+            logger.debug("Exiting from io blocked.");
         }
     }
 
@@ -64,9 +69,9 @@ public class InterruptTest {
         }
 
         public void run() {
-            System.out.println("Try to call f()");
+            logger.debug("Try to call f()");
             f();
-            System.out.println("Exiting from synchronized blocked.");
+            logger.debug("Exiting from synchronized blocked.");
         }
     }
 
@@ -76,11 +81,11 @@ public class InterruptTest {
         Future<?> f1 = executorService.submit(r);
         TimeUnit.MILLISECONDS.sleep(100);
 
-        System.out.println("Interrupting " + r.getClass().getName());
+        logger.debug("Interrupting " + r.getClass().getName());
 
         f1.cancel(true); //send true to interrupt if running
 
-        System.out.println("Interrupting " + r.getClass().getName());
+        logger.debug("Interrupting " + r.getClass().getName());
     }
 
     static class NIOBlocked implements Runnable {
@@ -92,12 +97,12 @@ public class InterruptTest {
 
         public void run() {
             try {
-                System.out.println("try read by nio.");
+                logger.debug("try read by nio.");
                 socketChannel.read(ByteBuffer.allocate(1));
             } catch (IOException e) {
-                System.out.println(e);
+                logger.debug(e);
             }
-            System.out.println("Exiting from nio.");
+            logger.debug("Exiting from nio.");
         }
     }
 
@@ -113,10 +118,10 @@ public class InterruptTest {
 
         executorService.shutdown();
 
-        TimeUnit.SECONDS.sleep(1); //±£Ö¤ÔËÐÐµ½readÓï¾ä
+        TimeUnit.SECONDS.sleep(1); //ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½Ðµï¿½readï¿½ï¿½ï¿½
         f1.cancel(true);
 
-        TimeUnit.SECONDS.sleep(1); //¿´µÄ¸üÇå³þÒ»Ð©
+        TimeUnit.SECONDS.sleep(1); //ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½Ò»Ð©
         sc2.close();
     }
 
@@ -129,31 +134,31 @@ public class InterruptTest {
 
         public void f() {
             try {
-//                lock.lockInterruptibly(); //ÇëÇó»ñÈ¡Ëø£¬²úÉúÒ»¸ö×èÈû
+//                lock.lockInterruptibly(); //ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 int count = 0;
                 for(int i = 0; i < 1000000000; i++) {
                     if(Thread.interrupted()) {
-                        System.out.println("interrupt from compute");
+                        logger.debug("interrupt from compute");
                         break;
                     }
                     count += (Math.PI + Math.E) / i;
                 }
 
-                System.out.println("lock acquired.");
+                logger.debug("lock acquired.");
             } catch (Exception e) {
-                System.out.println("Interrupted from lock acquisition.");
+                logger.debug("Interrupted from lock acquisition.");
             }
-            System.out.println("Exiting from Thread2.");
+            logger.debug("Exiting from Thread2.");
         }
     }
 
     static class BM2 implements Runnable {
-        private BlockMutex blockMutex = new BlockMutex(); //»ñµÃËø
+        private BlockMutex blockMutex = new BlockMutex(); //ï¿½ï¿½ï¿½ï¿½ï¿½
 
         public void run() {
-            System.out.println("block in f()");
+            logger.debug("block in f()");
             blockMutex.f();
-            System.out.println("broken out of block call");
+            logger.debug("broken out of block call");
         }
     }
 
@@ -172,6 +177,6 @@ public class InterruptTest {
         TimeUnit.MILLISECONDS.sleep(200);
 
         t.interrupt();
-        System.out.println("After call interrupt");
+        logger.debug("After call interrupt");
     }
 }

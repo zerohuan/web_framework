@@ -4,6 +4,8 @@ import com.yjh.base.util.number.Generator;
 import com.yjh.base.util.number.NormalGenerator;
 import com.yjh.base.util.number.NumberGeneratorFactory;
 import com.yjh.base.util.number.config.StepNormalConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 @WebServlet(name="asyncServlet", urlPatterns = "/async", asyncSupported = true)
 public class AsyncServlet extends HttpServlet {
+    private static Logger logger = LogManager.getLogger();
     private Generator generator;
 
     @Override
@@ -35,7 +38,7 @@ public class AsyncServlet extends HttpServlet {
 
         final int ID = generator.next();
 
-        System.out.println("doGet in" + getServletName());
+        logger.debug("doGet in" + getServletName());
 
         long timeout = req.getParameter("timeout") == null ? 10_000L : Long.parseLong(req.getParameter("timeout"));
 
@@ -49,7 +52,7 @@ public class AsyncServlet extends HttpServlet {
 
         context.start(thread::doWork);
 
-        System.out.println("Leaving servlet Request ID: " + ID + ", isAsyncStarted = " + req.isAsyncStarted());
+        logger.debug("Leaving servlet Request ID: " + ID + ", isAsyncStarted = " + req.isAsyncStarted());
     }
 
     private static class AsyncThread {
@@ -62,7 +65,7 @@ public class AsyncServlet extends HttpServlet {
         }
 
         public void doWork() {
-            System.out.println("AsyncThread task is running. ID " + id);
+            logger.debug("AsyncThread task is running. ID " + id);
             try {
                 TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {

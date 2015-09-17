@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="BaseFileAppender" fileName="../logs/application.log"
+                     filePattern="../logs/application-%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <pattern>%d{HH:mm:ss.SSS} [%t] %X{id} %X{username} %-5level %c{36} %l: %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy min="1" max="4" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="warn">
+            <AppenderRef ref="Console" />
+        </Root>
+        <Logger name="com.yjh.base" level="debug" additivity="false">
+            <AppenderRef ref="BaseFileAppender" />
+            <AppenderRef ref="Console">
+                <!--<MarkerFilter marker="BASE_CONSOLE" onMatch="NEUTRAL"-->
+                              <!--onMismatch="DENY" />-->
+            </AppenderRef>
+        </Logger>
+        <Logger name="org.apache" level="info">
+            <AppenderRef ref="BaseFileAppender" />
+        </Logger>
+    </Loggers>
+</Configuration>
+
