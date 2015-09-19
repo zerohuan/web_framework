@@ -1,4 +1,4 @@
-package com.yjh.base.action;
+package com.yjh.base.site.action;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

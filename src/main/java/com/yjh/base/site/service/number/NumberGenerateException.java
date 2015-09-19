@@ -1,4 +1,4 @@
-package com.yjh.base.util.number;
+package com.yjh.base.site.service.number;
 
 /**
  * exception of generation number which you could wrap other exception by.

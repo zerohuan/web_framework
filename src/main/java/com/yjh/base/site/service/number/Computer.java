@@ -1,4 +1,4 @@
-package com.yjh.base.util.number;
+package com.yjh.base.site.service.number;
 
 /**
  * interface of compute method using Generator

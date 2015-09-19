@@ -1,6 +1,6 @@
-package com.yjh.base.util.number;
+package com.yjh.base.site.service.number;
 
-import com.yjh.base.util.number.config.GeneratorConfig;
+import com.yjh.base.site.service.number.config.GeneratorConfig;
 
 /**
  * don't ask me why do like this using this complicated method, I just wanna play.

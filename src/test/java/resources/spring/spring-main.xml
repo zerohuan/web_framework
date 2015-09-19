@@ -36,11 +36,11 @@
     </bean>
 
     <!-- custom bean -->
-    <bean id="stepNormalConfig" class="com.yjh.base.util.number.config.StepNormalConfig" scope="prototype">
+    <bean id="stepNormalConfig" class="com.yjh.base.site.service.number.config.StepNormalConfig" scope="prototype">
         <constructor-arg name="start" value="1" />
         <constructor-arg name="end" value="#{T(java.lang.Integer.MAX_VALUE)}" />
         <constructor-arg name="step" value="1" />
-        <constructor-arg name="generatorClass" value="#{T(com.yjh.base.util.number.NormalGenerator).class}" />
+        <constructor-arg name="generatorClass" value="#{T(com.yjh.base.site.service.number.NormalGenerator).class}" />
         <constructor-arg name="isSynchronized" value="true" />
     </bean>
 

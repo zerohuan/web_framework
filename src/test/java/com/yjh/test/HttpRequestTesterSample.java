@@ -41,5 +41,6 @@ public class HttpRequestTesterSample {
 
             logger.debug(result);
         }
+
     }
 }

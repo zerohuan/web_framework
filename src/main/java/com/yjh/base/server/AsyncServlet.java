@@ -1,9 +1,9 @@
 package com.yjh.base.server;
 
-import com.yjh.base.util.number.Generator;
-import com.yjh.base.util.number.NormalGenerator;
-import com.yjh.base.util.number.NumberGeneratorFactory;
-import com.yjh.base.util.number.config.StepNormalConfig;
+import com.yjh.base.site.service.number.Generator;
+import com.yjh.base.site.service.number.NormalGenerator;
+import com.yjh.base.site.service.number.NumberGeneratorFactory;
+import com.yjh.base.site.service.number.config.StepNormalConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

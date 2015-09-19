@@ -1,6 +1,6 @@
-package com.yjh.base.action;
+package com.yjh.base.site.action;
 
-import com.yjh.base.service.SessionService;
+import com.yjh.base.site.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

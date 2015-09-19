@@ -1,7 +1,7 @@
-package com.yjh.base.util.number;
+package com.yjh.base.site.service.number;
 
-import com.yjh.base.util.number.config.GeneratorConfig;
-import com.yjh.base.util.number.config.NormalConfig;
+import com.yjh.base.site.service.number.config.GeneratorConfig;
+import com.yjh.base.site.service.number.config.NormalConfig;
 
 /**
  * a generator using "int" type to create next number

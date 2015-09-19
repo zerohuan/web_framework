@@ -1,6 +1,6 @@
-package com.yjh.base.util.number;
+package com.yjh.base.site.service.number;
 
-import com.yjh.base.util.number.config.GeneratorConfig;
+import com.yjh.base.site.service.number.config.GeneratorConfig;
 
 /**
  * Created by yjh on 2015/9/13.

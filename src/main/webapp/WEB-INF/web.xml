@@ -7,10 +7,10 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <!-- 国际化配置 -->
-    <context-param>
-        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-        <param-value>/com/yjh/resources/base</param-value>
-    </context-param>
+    <!--<context-param>-->
+        <!--<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>-->
+        <!--<param-value>/WEB-INF/classes/i18n/base</param-value>-->
+    <!--</context-param>-->
 
     <!-- servlet for test -->
     <servlet>
@@ -21,20 +21,6 @@
     <servlet-mapping>
         <servlet-name>Test</servlet-name>
         <url-pattern>/test</url-pattern>
-    </servlet-mapping>
-
-    <!-- spring config -->
-    <servlet>
-        <servlet-name>springDispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:resources/spring/spring-main.xml</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>springDispatcher</servlet-name>
-        <url-pattern>/m/*</url-pattern>
     </servlet-mapping>
 
     <!-- session config -->
@@ -65,4 +51,6 @@
             <default-content-type>text/html;charset=UTF-8</default-content-type>
         </jsp-property-group>
     </jsp-config>
+
+    <!--<distributable />-->
 </web-app>
