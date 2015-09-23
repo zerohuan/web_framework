@@ -1,5 +1,6 @@
 package com.yjh.base.initializer;
 
+import com.yjh.base.config.ManagerControllerContextConfiguration;
 import com.yjh.base.config.RootContextConfiguration;
 import com.yjh.base.config.WebControllerContextConfiguration;
 import org.apache.logging.log4j.LogManager;
@@ -9,9 +10,11 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import java.io.File;
 
 /**
  * Initialize Spring application context when application startUp.
@@ -32,12 +35,28 @@ public class BootStrap implements WebApplicationInitializer {
         container.addListener(new ContextLoaderListener(rootContext));
 
         //create a dispatcherServlet has own children context.
+        //servlet in framework
         AnnotationConfigWebApplicationContext servletContext = new AnnotationConfigWebApplicationContext();
         servletContext.register(WebControllerContextConfiguration.class);
         //add a dispatcherServlet for mvc controllers
         ServletRegistration.Dynamic dispatcher = container.addServlet("mvcServlet",
                 new DispatcherServlet(servletContext));
         dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/m/*");
+        //File upload configuration
+        File path = new File(container.getRealPath("/tmp/practicewellness/"));
+        if(!path.exists())
+            path.mkdirs();
+        dispatcher.setMultipartConfig(new MultipartConfigElement(
+                path.getAbsolutePath(), 200_971_520L, 401_943_040L, 0
+        ));
+        dispatcher.addMapping("/b/*");
+
+        //cg project
+        AnnotationConfigWebApplicationContext cgContext = new AnnotationConfigWebApplicationContext();
+        cgContext.register(ManagerControllerContextConfiguration.class);
+        ServletRegistration.Dynamic dispatcherCG = container.addServlet("cgServlet",
+                new DispatcherServlet(cgContext));
+        dispatcherCG.setLoadOnStartup(1);
+        dispatcherCG.addMapping("/m/*");
     }
 }

@@ -1,4 +1,4 @@
-package com.yjh.test.data;
+package com.yjh.test.example.data;
 
 import com.yjh.base.site.service.number.Generator;
 import com.yjh.base.site.service.number.config.NormalConfig;

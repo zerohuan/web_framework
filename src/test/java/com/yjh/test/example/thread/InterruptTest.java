@@ -1,4 +1,4 @@
-package com.yjh.test.thread;
+package com.yjh.test.example.thread;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

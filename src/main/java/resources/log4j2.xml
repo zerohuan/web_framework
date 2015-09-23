@@ -17,7 +17,7 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="warn">
+        <Root level="debug">
             <AppenderRef ref="Console" />
         </Root>
         <Logger name="com.yjh.base" level="debug" additivity="false">
