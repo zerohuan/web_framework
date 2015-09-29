@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by yjh on 2015/9/15.
  */
-@WebFilter(filterName = "asyncFilter", urlPatterns = "/*", servletNames = {"asyncServlet"}, asyncSupported = true, dispatcherTypes = DispatcherType.ASYNC)
+//@WebFilter(filterName = "asyncFilter", urlPatterns = "/*", servletNames = {"asyncServlet"}, asyncSupported = true, dispatcherTypes = DispatcherType.ASYNC)
 public class AsyncFilter implements Filter {
     private static Logger logger = LogManager.getLogger();
 

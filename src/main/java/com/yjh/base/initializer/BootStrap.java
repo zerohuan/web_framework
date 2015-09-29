@@ -1,6 +1,5 @@
 package com.yjh.base.initializer;
 
-import com.yjh.base.config.ManagerControllerContextConfiguration;
 import com.yjh.base.config.RootContextConfiguration;
 import com.yjh.base.config.WebControllerContextConfiguration;
 import org.apache.logging.log4j.LogManager;
@@ -43,20 +42,16 @@ public class BootStrap implements WebApplicationInitializer {
                 new DispatcherServlet(servletContext));
         dispatcher.setLoadOnStartup(1);
         //File upload configuration
-        File path = new File(container.getRealPath("/tmp/practicewellness/"));
-        if(!path.exists())
-            path.mkdirs();
-        dispatcher.setMultipartConfig(new MultipartConfigElement(
-                path.getAbsolutePath(), 200_971_520L, 401_943_040L, 0
-        ));
+        File path = new File(container.getRealPath("/tmp/web_yjh_files/"));
+
+        if(path.exists() || path.mkdirs()) {
+            dispatcher.setMultipartConfig(new MultipartConfigElement(
+                    path.getAbsolutePath(), 200_971_520L, 401_943_040L, 0
+            ));
+        } else {
+            throw new ServletException("Cannot set multipartConfig because of tmp path");
+        }
         dispatcher.addMapping("/b/*");
 
-        //cg project
-        AnnotationConfigWebApplicationContext cgContext = new AnnotationConfigWebApplicationContext();
-        cgContext.register(ManagerControllerContextConfiguration.class);
-        ServletRegistration.Dynamic dispatcherCG = container.addServlet("cgServlet",
-                new DispatcherServlet(cgContext));
-        dispatcherCG.setLoadOnStartup(1);
-        dispatcherCG.addMapping("/m/*");
     }
 }

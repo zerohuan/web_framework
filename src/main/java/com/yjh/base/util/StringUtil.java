@@ -2207,5 +2207,17 @@ public class StringUtil {
 		}
 		return outBuffer.toString();
 	}
+
+	public enum LineBreakType {
+		TEXT, HTML
+	}
+	public static String createLineBreak(LineBreakType type) {
+		String res;
+		switch (type) {
+			case HTML: res = "<br />";break;
+			default: res = "\r\n";
+		}
+		return res;
+	}
 }
 

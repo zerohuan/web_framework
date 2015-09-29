@@ -125,5 +125,23 @@ public class ConditionShow {
 
     }
 
+    class Tuple<T> {
+        public void get(T t) {
+
+        }
+    }
+
+    static class P {
+
+    }
+
+    static class P1 extends P {
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+    }
+
 
 }

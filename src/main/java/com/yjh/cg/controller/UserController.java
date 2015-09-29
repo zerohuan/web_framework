@@ -4,7 +4,6 @@ import com.yjh.cg.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.GET;
 import java.util.Map;
 
 /**
@@ -26,11 +25,8 @@ public class UserController {
     @ModelAttribute("user")
     public String useInfo(@PathVariable Map<String, String> variables) {
         User user = new User();
-        user.setName(variables.get("name"));
-        user.setUserId(Long.parseLong(variables.get("userId")));
 
         return "user/info";
     }
-
 
 }

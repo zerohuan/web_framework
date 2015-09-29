@@ -80,4 +80,5 @@ public class AsyncServlet extends HttpServlet {
     public void destroy() {
         generator = null;
     }
+
 }

@@ -18,7 +18,7 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @ComponentScan(
-        basePackages = "com.yjh.base.site",
+        basePackages = "com",
         excludeFilters = @ComponentScan.Filter(Controller.class)
 )
 public class RootContextConfiguration {
