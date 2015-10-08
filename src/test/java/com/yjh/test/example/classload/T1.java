@@ -9,6 +9,6 @@ import org.apache.logging.log4j.Logger;
 public class T1 {
     private static Logger logger = LogManager.getLogger();
     public T1() {
-        logger.debug("T1 CREATED");
+        logger.debug("Main CREATED");
     }
 }

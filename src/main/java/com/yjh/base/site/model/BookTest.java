@@ -1,4 +1,4 @@
-package com.yjh.base.model;
+package com.yjh.base.site.model;
 
 /**
  * Created by yjh on 2015/9/10.
@@ -7,6 +7,9 @@ public class BookTest {
     private String name;
     private double price;
     private int count;
+
+    public BookTest() {
+    }
 
     public BookTest(String name, double price, int count) {
         this.name = name;
@@ -46,4 +49,5 @@ public class BookTest {
                 ", count=" + count +
                 '}';
     }
+
 }

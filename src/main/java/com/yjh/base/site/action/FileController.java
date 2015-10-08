@@ -1,5 +1,6 @@
 package com.yjh.base.site.action;
 
+import com.yjh.base.site.service.DefaultBFileService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -9,14 +10,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 /**
+ * File download and upload
+ *
  * Created by yjh on 15-9-20.
  */
 @Controller
 public class FileController {
     private static Logger logger = LogManager.getLogger();
+    @Inject
+    private DefaultBFileService fileService;
 
     @RequestMapping("showUpload")
     public String showUpload() {
@@ -72,5 +79,12 @@ public class FileController {
             this.attachments = attachments;
         }
     }
+
+    @RequestMapping(value = "listFile", method = RequestMethod.GET)
+    public String fileList(Map<String, Object> model) {
+        model.put("fileList", fileService.getBFiles());
+        return "entities";
+    }
+
 
 }

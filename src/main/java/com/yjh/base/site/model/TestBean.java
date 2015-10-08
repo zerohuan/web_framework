@@ -1,4 +1,4 @@
-package com.yjh.base.model;
+package com.yjh.base.site.model;
 
 import java.time.DayOfWeek;
 

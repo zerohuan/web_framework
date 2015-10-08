@@ -1,6 +1,6 @@
 package com.yjh.base.server;
 
-import com.yjh.cg.model.User;
+import com.yjh.cg.site.model.BUserEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.servlet.ViewResolver;
@@ -35,7 +35,7 @@ public class TestServlet extends HttpServlet {
 
         logger.debug("tomcat's class: " + req.getClass().getClassLoader().getClass().getCanonicalName());
         logger.debug("other lib: " + ViewResolver.class.getClassLoader().getClass().getCanonicalName());
-        logger.debug("mine class: " + User.class.getClassLoader().getClass().getCanonicalName());
+        logger.debug("mine class: " + BUserEntity.class.getClassLoader().getClass().getCanonicalName());
 
         logger.debug("Core class's: " + (List.class.getClassLoader() == null));
     }

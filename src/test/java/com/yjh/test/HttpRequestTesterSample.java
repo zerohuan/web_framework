@@ -27,7 +27,7 @@ public class HttpRequestTesterSample {
 
     @Test
     public void test() throws Exception {
-        HttpPost httpRequest = new HttpPost(Contants.BASE_URL + "/test");
+        HttpPost httpRequest = new HttpPost(Constants.BASE_URL + "/test");
         String result;
 
         List<NameValuePair> params = new ArrayList<>();
