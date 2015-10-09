@@ -57,6 +57,8 @@ public class UserController {
         }).execute();
     }
 
+
+
     @RequestMapping(value = "test", method = RequestMethod.GET)
     @ResponseBody
     public BUserEntity test(Map<String, Object> model) {
