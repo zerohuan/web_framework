@@ -72,7 +72,7 @@ public class AsyncServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            this.context.dispatch("/WEB-INF/m/async.jsp");
+//            this.context.dispatch("/WEB-INF/m/async.jsp");
         }
     }
 

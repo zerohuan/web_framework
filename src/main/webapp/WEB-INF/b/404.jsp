@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: lenovo
-  Date: 2015/9/15
-  Time: 17:47
+  User: yjh
+  Date: 15-9-20
+  Time: 下午5:33
   To change this template use File | Settings | File Templates.
 --%>
 <html>
@@ -10,6 +10,6 @@
     <title></title>
 </head>
 <body>
-  <p>In async JSP.<% System.out.println("In async."); %></p>
+  <img src="<c:url value="/resources/images/404.jpg" />" />
 </body>
 </html>

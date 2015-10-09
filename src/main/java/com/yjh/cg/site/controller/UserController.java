@@ -1,7 +1,6 @@
 package com.yjh.cg.site.controller;
 
 import com.yjh.base.exception.BRequestHandler;
-import com.yjh.base.exception.BSystemException;
 import com.yjh.base.site.entities.BResponseData;
 import com.yjh.cg.site.entities.BUserEntity;
 import com.yjh.cg.site.service.UserService;
@@ -46,6 +45,7 @@ public class UserController {
      * @param username length:1-20
      * @param password length:1-20
      * @param role {@link com.yjh.cg.site.entities.BRole}
+     * @param session add automatically by spring
      * @return user data when success, error message when fail
      */
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -59,7 +59,6 @@ public class UserController {
             //authentic success add username and role into session attributes
             session.setAttribute("username", user.getUsername());
             session.setAttribute("role", user.getRole());
-            throw new BSystemException("user exception");
         }).execute();
     }
 

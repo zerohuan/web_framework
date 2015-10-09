@@ -67,7 +67,7 @@ public class EntityServlet extends HttpServlet {
 
             transaction.commit();
 
-            req.getRequestDispatcher("/WEB-INF/b/entities.jsp").forward(req, resp);
+//            req.getRequestDispatcher("/WEB-INF/b/entities.jsp").forward(req, resp);
         } catch (Exception e) {
             if(transaction != null && transaction.isActive()) {
                 transaction.rollback();

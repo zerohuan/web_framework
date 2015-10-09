@@ -1,15 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
-  User: lenovo
-  Date: 2015/9/15
-  Time: 17:47
+  User: yjh
+  Date: 15-10-9
+  Time: 下午4:46
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page isErrorPage="true" %>
 <html>
 <head>
-    <title></title>
+    <title>出错啦！</title>
 </head>
 <body>
-  <p>In noAsync JSP.<% System.out.println("In noAsync."); %></p>
+  <p>error</p>
 </body>
 </html>

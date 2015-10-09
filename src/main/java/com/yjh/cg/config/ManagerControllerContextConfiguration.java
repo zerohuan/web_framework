@@ -27,9 +27,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.RequestToViewNameTranslator;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 import javax.inject.Inject;
 import java.nio.charset.Charset;
@@ -111,6 +116,29 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
                 .mediaType("xml", MediaType.APPLICATION_XML)
                 .mediaType("json", MediaType.APPLICATION_JSON);
     }
+
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+
+        logger.debug("project resolver initial.");
+
+        resolver.setViewClass(JstlView.class);
+        resolver.setPrefix("/WEB-INF/m/");
+        resolver.setSuffix(".jsp");
+        return resolver;
+    }
+
+    /**
+     * if you want to return entities and entities attribute, you need it translate entities to name of view.
+     *
+     */
+    @Bean
+    public RequestToViewNameTranslator viewNameTranslator()
+    {
+        return new DefaultRequestToViewNameTranslator();
+    }
+
 
     /**
      * add argumentResolvers

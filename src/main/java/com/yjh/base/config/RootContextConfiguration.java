@@ -26,12 +26,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.RequestToViewNameTranslator;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
-import org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
 import javax.persistence.ValidationMode;
 import javax.sql.DataSource;
@@ -79,28 +74,6 @@ public class RootContextConfiguration {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         marshaller.setPackagesToScan("com.yjh.base.site","com.yjh.cg.site");
         return marshaller;
-    }
-
-    @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-
-        logger.debug("resolver initial.");
-
-        resolver.setViewClass(JstlView.class);
-        resolver.setPrefix("/WEB-INF/m/");
-        resolver.setSuffix(".jsp");
-        return resolver;
-    }
-
-    /**
-     * if you want to return entities and entities attribute, you need it translate entities to name of view.
-     *
-     */
-    @Bean
-    public RequestToViewNameTranslator viewNameTranslator()
-    {
-        return new DefaultRequestToViewNameTranslator();
     }
 
     /**
