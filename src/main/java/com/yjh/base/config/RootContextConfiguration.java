@@ -3,6 +3,7 @@ package com.yjh.base.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.yjh.base.exception.CostumeExceptionResolver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.MessageSource;
@@ -24,8 +25,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -91,7 +94,7 @@ public class RootContextConfiguration {
     }
 
     /**
-     * if you want to return model and model attribute, you need it translate model to name of view.
+     * if you want to return entities and entities attribute, you need it translate entities to name of view.
      *
      */
     @Bean
@@ -215,5 +218,12 @@ public class RootContextConfiguration {
                 new MethodValidationPostProcessor();
         processor.setValidator(this.localValidatorFactoryBean());
         return processor;
+    }
+
+    //TODO exceptionResolver
+    public HandlerExceptionResolver exceptionResolver() {
+        SimpleMappingExceptionResolver resolver = new CostumeExceptionResolver();
+
+        return resolver;
     }
 }

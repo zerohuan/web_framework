@@ -1,6 +1,6 @@
 package com.yjh.base.site.service;
 
-import com.yjh.base.site.model.BFile;
+import com.yjh.base.site.entities.BFile;
 import com.yjh.base.site.repository.BFileRepository;
 import org.springframework.stereotype.Service;
 

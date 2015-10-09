@@ -5,11 +5,11 @@
   Time: 15:34
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="com.yjh.base.site.model.BookTest,java.time.DayOfWeek,java.util.List" %>
+<%@ page import="com.yjh.base.site.entities.BookTest,java.time.DayOfWeek,java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.yjh.base.util.CollectionUtil,java.util.Arrays" %>
 
-<jsp:useBean id="day" class="com.yjh.base.site.model.TestBean" scope="page" />
+<jsp:useBean id="day" class="com.yjh.base.site.entities.TestBean" scope="page" />
 
 <%
     //EL表达式可以直接访问day1,day2变量

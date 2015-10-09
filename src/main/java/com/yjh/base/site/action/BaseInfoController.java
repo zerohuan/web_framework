@@ -1,6 +1,5 @@
 package com.yjh.base.site.action;
 
-import com.yjh.base.site.model.BookTest;
 import com.yjh.base.reflect.NetClassLoader;
 import com.yjh.base.site.service.RequestService;
 import org.apache.logging.log4j.LogManager;
@@ -61,16 +60,12 @@ public class BaseInfoController {
 //        BookTest bookTest = (BookTest)claz.newInstance();
 //        bookTest.setName("yjh");
 
-//        classLoader.loadClass("com.yjh.base.site.model.BookTest");
+//        classLoader.loadClass("com.yjh.base.site.entities.BookTest");
 
         Object obj = claz.newInstance();
-        BookTest bookTest = new BookTest();
 
         claz.getMethod("printStatus").invoke(obj);
 
-        logger.debug(bookTest.getClass().getClassLoader().getClass().getCanonicalName());
-        logger.debug(obj.getClass().getCanonicalName());
-        logger.debug(obj.getClass().getClassLoader().getClass().getCanonicalName());
 
         claz.getMethod("setName", String.class).invoke(obj, "yjh");
 

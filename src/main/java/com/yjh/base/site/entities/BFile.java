@@ -1,4 +1,4 @@
-package com.yjh.base.site.model;
+package com.yjh.base.site.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;

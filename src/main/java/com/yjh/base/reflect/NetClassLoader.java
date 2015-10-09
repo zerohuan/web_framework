@@ -10,13 +10,15 @@ import java.net.URL;
 import java.util.Arrays;
 
 /**
+ * Class loader for class file from net
+ *
  * Created by yjh on 15-9-29.
  */
 public class NetClassLoader extends ClassLoader {
     private static Logger logger = LogManager.getLogger();
 
     private String classPath;
-    private String packageName = "com.yjh.base.site.model";
+    private String packageName = "com.yjh.base.site.entities";
 
     public NetClassLoader(String classPath) {
         this.classPath = classPath;

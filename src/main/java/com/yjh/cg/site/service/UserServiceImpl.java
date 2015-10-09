@@ -1,14 +1,13 @@
 package com.yjh.cg.site.service;
 
-import com.yjh.cg.site.model.BRole;
-import com.yjh.cg.site.model.BUserEntity;
+import com.yjh.cg.site.entities.BUserEntity;
 import com.yjh.cg.site.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
 /**
- *
+ * business logic implement for user
  *
  * Created by yjh on 15-10-8.
  */

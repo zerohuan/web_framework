@@ -1,8 +1,9 @@
 package com.yjh.cg.site.controller;
 
 import com.yjh.base.exception.BRequestHandler;
-import com.yjh.base.site.model.BResponseData;
-import com.yjh.cg.site.model.BUserEntity;
+import com.yjh.base.exception.BSystemException;
+import com.yjh.base.site.entities.BResponseData;
+import com.yjh.cg.site.entities.BUserEntity;
 import com.yjh.cg.site.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 /**
  * User logic controller
@@ -33,10 +34,9 @@ public class UserController {
         return "success<br />" + userId + " " + "name: " + name;
     }
 
-    @RequestMapping(value="info/{userId}/{name}", method = RequestMethod.GET)
+    @RequestMapping(value="info/{id}", method = RequestMethod.GET)
     @ModelAttribute("user")
-    public String useInfo(@PathVariable Map<String, String> variables) {
-        BUserEntity user = new BUserEntity();
+    public String useInfo(@PathVariable(value = "id") BUserEntity userEntity) {
 
         return "user/info";
     }
@@ -45,27 +45,22 @@ public class UserController {
      * sign in
      * @param username length:1-20
      * @param password length:1-20
-     * @param role {@link com.yjh.cg.site.model.BRole}
+     * @param role {@link com.yjh.cg.site.entities.BRole}
      * @return user data when success, error message when fail
      */
     @RequestMapping(value = "login", method = RequestMethod.GET)
     @ResponseBody
-    public BResponseData login(String username, String password, String role) {
+    public BResponseData login(String username, String password, String role,
+                               final HttpSession session) {
         return new BRequestHandler((responseData) -> {
             BUserEntity user = UserController.this.userService.login(username, password, role);
             responseData.setData(user);
+
+            //authentic success add username and role into session attributes
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("role", user.getRole());
+            throw new BSystemException("user exception");
         }).execute();
-    }
-
-
-
-    @RequestMapping(value = "test", method = RequestMethod.GET)
-    @ResponseBody
-    public BUserEntity test(Map<String, Object> model) {
-        model.put("sdf","sdfsd");
-        BUserEntity user = new BUserEntity();
-        user.setIdNumber("1231313");
-        return user;
     }
 
 }

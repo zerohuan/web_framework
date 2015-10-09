@@ -1,6 +1,6 @@
 package com.yjh.base.server;
 
-import com.yjh.base.site.model.BFile;
+import com.yjh.base.site.entities.BFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

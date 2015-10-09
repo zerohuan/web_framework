@@ -1,6 +1,6 @@
 package com.yjh.cg.site.repository;
 
-import com.yjh.cg.site.model.BUserEntity;
+import com.yjh.cg.site.entities.BUserEntity;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**

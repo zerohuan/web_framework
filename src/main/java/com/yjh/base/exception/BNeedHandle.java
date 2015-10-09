@@ -1,6 +1,6 @@
 package com.yjh.base.exception;
 
-import com.yjh.base.site.model.BResponseData;
+import com.yjh.base.site.entities.BResponseData;
 
 /**
  * some logic need handle exception wrapped by BRequestHandler

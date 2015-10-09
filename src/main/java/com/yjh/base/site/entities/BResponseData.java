@@ -1,4 +1,4 @@
-package com.yjh.base.site.model;
+package com.yjh.base.site.entities;
 
 import javax.validation.ConstraintViolation;
 import java.io.Serializable;
@@ -35,6 +35,9 @@ public class BResponseData implements Serializable {
                 this.data = error;
                 return;
             }
+        } else if(data instanceof Exception) {
+            this.data = ((Exception) data).getMessage();
+            return;
         }
 
         this.data = data;

@@ -1,4 +1,4 @@
-package com.yjh.cg.site.model;
+package com.yjh.cg.site.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

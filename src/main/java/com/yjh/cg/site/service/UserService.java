@@ -1,6 +1,6 @@
 package com.yjh.cg.site.service;
 
-import com.yjh.cg.site.model.BUserEntity;
+import com.yjh.cg.site.entities.BUserEntity;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;

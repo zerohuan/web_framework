@@ -38,7 +38,7 @@ public class CompressFilter implements Filter {
             //add response header
             response.setHeader("Content-Encoding", "gzip");
             //compress
-            //you can see decoration model is a popular design model
+            //you can see decoration entities is a popular design entities
             ResponseWrapper wrapper = new ResponseWrapper(response);
             //doFilter, close writer
             try {

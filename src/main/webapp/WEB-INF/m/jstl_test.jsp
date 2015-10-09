@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="com.yjh.base.site.model.BookTest,java.time.DayOfWeek,java.util.List" %>
+<%@ page import="com.yjh.base.site.entities.BookTest,java.time.DayOfWeek,java.util.List" %>
 <%@ page import="java.util.ArrayList,java.util.Date" %>
 
 <fmt:setLocale value="zh_CN" />

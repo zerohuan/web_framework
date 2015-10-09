@@ -1,6 +1,6 @@
 package com.yjh.base.server;
 
-import com.yjh.cg.site.model.BUserEntity;
+import com.yjh.cg.site.entities.BUserEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.servlet.ViewResolver;
@@ -14,6 +14,8 @@ import java.io.PrintWriter;
 import java.util.List;
 
 /**
+ * TODO delete it before in production
+ *
  * Created by yjh on 2015/9/3.
  */
 public class TestServlet extends HttpServlet {

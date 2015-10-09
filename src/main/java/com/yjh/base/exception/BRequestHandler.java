@@ -1,6 +1,6 @@
 package com.yjh.base.exception;
 
-import com.yjh.base.site.model.BResponseData;
+import com.yjh.base.site.entities.BResponseData;
 
 import javax.validation.ConstraintViolationException;
 
@@ -30,11 +30,10 @@ public class BRequestHandler {
             //Validation exception
             responseData.setData(e.getConstraintViolations());
             responseData.setErrCode(BEnumError.VALIDATION_ERROR.getCode());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } catch (Throwable e) {
-            throw e;
+        } catch (RuntimeException e) {
+            throw new BSystemException(e);
         }
+
         return responseData;
     }
 

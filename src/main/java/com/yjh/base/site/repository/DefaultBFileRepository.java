@@ -1,6 +1,6 @@
 package com.yjh.base.site.repository;
 
-import com.yjh.base.site.model.BFile;
+import com.yjh.base.site.entities.BFile;
 import org.springframework.stereotype.Repository;
 
 /**
