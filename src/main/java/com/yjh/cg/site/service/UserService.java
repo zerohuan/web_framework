@@ -14,6 +14,6 @@ import javax.validation.constraints.NotNull;
 public interface UserService {
     @NotNull(message = "{error.login.fail}")
     BUserEntity login(@NotNull(message = "{error.login.username}") String username,
-                      @NotNull(message = "{error.login.username}") String password,
-                      @NotNull(message = "{error.login.username}") String role);
+                      @NotNull(message = "{error.login.pwd}") String password,
+                      @NotNull(message = "{error.login.role}") String role);
 }

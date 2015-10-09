@@ -32,6 +32,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.inject.Inject;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,8 +73,8 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
         converters.add(new ByteArrayHttpMessageConverter());
         StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
         stringHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(
-                new MediaType("text/plain;charset=UTF-8"),
-                new MediaType("text/html;charset=UTF-8")
+                new MediaType("text", "plain", Charset.forName("utf-8")),
+                new MediaType("text", "html", Charset.forName("utf-8"))
         ));
         converters.add(stringHttpMessageConverter);
         converters.add(new FormHttpMessageConverter());
@@ -83,9 +84,9 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
         MappingJackson2HttpMessageConverter jsonConverter =
                 new MappingJackson2HttpMessageConverter();
         jsonConverter.setSupportedMediaTypes(Arrays.asList(
-                new MediaType("application/json; charset=UTF-8"),
-                new MediaType("text/json; charset=UTF-8"),
-                new MediaType("application/x-www-form-urlencoded; charset=UTF-8")
+                new MediaType("application", "json", Charset.forName("utf-8")),
+                new MediaType("text", "json", Charset.forName("utf-8")),
+                new MediaType("application", "x-www-form-urlencoded", Charset.forName("utf-8"))
         ));
         jsonConverter.setObjectMapper(this.objectMapper);
         converters.add(jsonConverter);
@@ -94,8 +95,8 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
         MarshallingHttpMessageConverter xmlConverter =
                 new MarshallingHttpMessageConverter();
         xmlConverter.setSupportedMediaTypes(Arrays.asList(
-                new MediaType("application", "xml"),
-                new MediaType("text", "xml")
+                new MediaType("application", "xml", Charset.forName("utf-8")),
+                new MediaType("text", "xml", Charset.forName("utf-8"))
         ));
         xmlConverter.setMarshaller(this.marshaller);
         xmlConverter.setUnmarshaller(this.unmarshaller);

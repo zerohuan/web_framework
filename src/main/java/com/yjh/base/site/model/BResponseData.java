@@ -10,7 +10,7 @@ import java.util.Set;
  *
  * Created by yjh on 15-10-8.
  */
-public class ResponseData implements Serializable {
+public class BResponseData implements Serializable {
     private Object data;
     private int errCode;
 
@@ -31,7 +31,7 @@ public class ResponseData implements Serializable {
                 ConstraintViolation<?> constraintViolation = ((Set<ConstraintViolation<?>>)dataSet).iterator().next();
                 BError error = new BError();
                 error.setMessage(constraintViolation.getMessage());
-
+                
                 this.data = error;
                 return;
             }
@@ -50,7 +50,7 @@ public class ResponseData implements Serializable {
 
     @Override
     public String toString() {
-        return "ResponseData{" +
+        return "BResponseData{" +
                 "data=" + data +
                 ", errCode=" + errCode +
                 '}';

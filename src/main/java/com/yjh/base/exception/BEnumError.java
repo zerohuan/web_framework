@@ -1,13 +1,19 @@
-package com.yjh.base.site.model;
-
-import java.io.Serializable;
+package com.yjh.base.exception;
 
 /**
- * Created by yjh on 15-10-8.
+ * some error for feedback to client
+ *
+ * Created by yjh on 15-10-9.
  */
-public class BError implements Serializable {
+public enum  BEnumError {
+    VALIDATION_ERROR("验证错误", 10001);
     private String message;
     private int code;
+
+    BEnumError(String message, int code) {
+        this.message = message;
+        this.code = code;
+    }
 
     public String getMessage() {
         return message;
@@ -23,13 +29,5 @@ public class BError implements Serializable {
 
     public void setCode(int code) {
         this.code = code;
-    }
-
-    @Override
-    public String toString() {
-        return "BError{" +
-                "message='" + message + '\'' +
-                ", code=" + code +
-                '}';
     }
 }

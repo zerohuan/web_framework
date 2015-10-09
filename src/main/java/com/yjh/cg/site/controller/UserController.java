@@ -1,6 +1,7 @@
 package com.yjh.cg.site.controller;
 
-import com.yjh.base.site.model.ResponseData;
+import com.yjh.base.exception.BRequestHandler;
+import com.yjh.base.site.model.BResponseData;
 import com.yjh.cg.site.model.BUserEntity;
 import com.yjh.cg.site.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import javax.validation.ConstraintViolationException;
 import java.util.Map;
 
 /**
@@ -50,19 +50,11 @@ public class UserController {
      */
     @RequestMapping(value = "login", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseData login(String username, String password, String role) {
-        ResponseData responseData = new ResponseData();
-        BUserEntity user;
-
-        try {
-            user = this.userService.login(username, password, role);
+    public BResponseData login(String username, String password, String role) {
+        return new BRequestHandler((responseData) -> {
+            BUserEntity user = UserController.this.userService.login(username, password, role);
             responseData.setData(user);
-        } catch (ConstraintViolationException e) {
-            responseData.setData(e.getConstraintViolations());
-            logger.debug(responseData);
-        }
-
-        return responseData;
+        }).execute();
     }
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
