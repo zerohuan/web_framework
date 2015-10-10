@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * User logic controller
@@ -34,9 +35,9 @@ public class UserController {
     }
 
     @RequestMapping(value="info/{id}", method = RequestMethod.GET)
-    @ModelAttribute("user")
-    public String useInfo(@PathVariable(value = "id") BUserEntity userEntity) {
-
+    public String useInfo(@PathVariable(value = "id") BUserEntity userEntity,
+                               Map<String, Object> model) {
+        model.put("user", userEntity);
         return "user/info";
     }
 

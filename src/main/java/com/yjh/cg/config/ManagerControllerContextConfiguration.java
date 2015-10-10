@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -54,10 +55,13 @@ import java.util.List;
         useDefaultFilters = false,
         includeFilters = @ComponentScan.Filter(Controller.class)
 )
-@Profile("development")
-@PropertySource("classpath:setting.properties")
+@Profile("production")
+@PropertySource(value = "classpath:setting.properties", ignoreResourceNotFound = false)
 public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapter {
     private static Logger logger = LogManager.getLogger();
+
+    @Inject
+    Environment env;
 
     @Inject
     ApplicationContext applicationContext;
@@ -75,11 +79,13 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
     public void configureMessageConverters(
             List<HttpMessageConverter<?>> converters
     ) {
+        String baseEncode = env.getProperty("project.encode");
+
         converters.add(new ByteArrayHttpMessageConverter());
         StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
         stringHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(
-                new MediaType("text", "plain", Charset.forName("utf-8")),
-                new MediaType("text", "html", Charset.forName("utf-8"))
+                new MediaType("text", "plain", Charset.forName(baseEncode)),
+                new MediaType("text", "html", Charset.forName(baseEncode))
         ));
         converters.add(stringHttpMessageConverter);
         converters.add(new FormHttpMessageConverter());
@@ -89,9 +95,9 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
         MappingJackson2HttpMessageConverter jsonConverter =
                 new MappingJackson2HttpMessageConverter();
         jsonConverter.setSupportedMediaTypes(Arrays.asList(
-                new MediaType("application", "json", Charset.forName("utf-8")),
-                new MediaType("text", "json", Charset.forName("utf-8")),
-                new MediaType("application", "x-www-form-urlencoded", Charset.forName("utf-8"))
+                new MediaType("application", "json", Charset.forName(baseEncode)),
+                new MediaType("text", "json", Charset.forName(baseEncode)),
+                new MediaType("application", "x-www-form-urlencoded", Charset.forName(baseEncode))
         ));
         jsonConverter.setObjectMapper(this.objectMapper);
         converters.add(jsonConverter);
@@ -100,8 +106,8 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
         MarshallingHttpMessageConverter xmlConverter =
                 new MarshallingHttpMessageConverter();
         xmlConverter.setSupportedMediaTypes(Arrays.asList(
-                new MediaType("application", "xml", Charset.forName("utf-8")),
-                new MediaType("text", "xml", Charset.forName("utf-8"))
+                new MediaType("application", "xml", Charset.forName(baseEncode)),
+                new MediaType("text", "xml", Charset.forName(baseEncode))
         ));
         xmlConverter.setMarshaller(this.marshaller);
         xmlConverter.setUnmarshaller(this.unmarshaller);
@@ -120,8 +126,6 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-
-        logger.debug("project resolver initial.");
 
         resolver.setViewClass(JstlView.class);
         resolver.setPrefix("/WEB-INF/m/");

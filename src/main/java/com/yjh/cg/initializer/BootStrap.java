@@ -23,6 +23,7 @@ public class BootStrap implements WebApplicationInitializer {
                 new DispatcherServlet(cgContext));
         dispatcherCG.setLoadOnStartup(1);
         dispatcherCG.addMapping("/m/*");
+        cgContext.getEnvironment().setActiveProfiles("production");
     }
 
 }

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Map;
+
 /**
  * student client supporter
  *
@@ -19,5 +21,12 @@ public class StudentController {
     @ResponseBody
     public BResponseData models() {
         throw new BSystemException("other controller");
+    }
+
+    @RequestMapping(value = "main", method = RequestMethod.GET)
+    public Map<String, Object> main(Map<String, Object> model) {
+
+
+        return model;
     }
 }
