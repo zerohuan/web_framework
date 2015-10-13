@@ -7,7 +7,8 @@ package com.yjh.base.exception;
  */
 public enum  BEnumError {
     VALIDATION_ERROR("验证错误", 10001),
-    LOGIN_ERROR("请先登录", 10002);
+    LOGIN_ERROR("请先登录", 10002),
+    DATA_UPDATE_ERROR("数据保存异常", 10003);
     private String message;
     private int code;
 
@@ -30,5 +31,10 @@ public enum  BEnumError {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return message;
     }
 }

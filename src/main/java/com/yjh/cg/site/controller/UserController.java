@@ -1,6 +1,8 @@
 package com.yjh.cg.site.controller;
 
+import com.yjh.base.exception.BEnumError;
 import com.yjh.base.exception.BRequestHandler;
+import com.yjh.base.exception.BSystemException;
 import com.yjh.base.site.entities.BResponseData;
 import com.yjh.cg.site.entities.BUserEntity;
 import com.yjh.cg.site.service.UserService;
@@ -48,7 +50,11 @@ public class UserController {
     public String useInfo(@PathVariable(value = "id") long id,
                                BUserEntity userEntity, Map<String, Object> model) {
         logger.debug(userEntity.getUsername());
-        model.put("user", this.userService.save(userEntity));
+        if(this.userService.updateNotNull(userEntity) > 0)
+            model.put("user", userEntity);
+        else {
+            throw new BSystemException(BEnumError.DATA_UPDATE_ERROR.toString());
+        }
         return "user/info";
     }
 

@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.yjh.base.exception.CostumeExceptionResolver;
-import com.yjh.cg.site.repository.CustomRepositoryFactoryBean;
+import com.yjh.base.util.CustomRepositoryFactoryBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.AdviceMode;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -140,14 +143,14 @@ public class RootContextConfiguration {
         );
     }
 
-    /**
-     * Spring always use {@code annotationDrivenTransactionManager} to be
-     * default @{@link org.springframework.transaction.annotation.Transactional} manager.
-     */
-    @Bean
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
-        return this.jpaTransactionManager();
-    }
+//    /**
+//     * Spring always use {@code annotationDrivenTransactionManager} to be
+//     * default @{@link org.springframework.transaction.annotation.Transactional} manager.
+//     */
+//    @Bean
+//    public PlatformTransactionManager annotationDrivenTransactionManager() {
+//        return this.jpaTransactionManager();
+//    }
 
     //message international
     @Bean

@@ -17,4 +17,5 @@ public interface UserService {
                       @NotNull(message = "{error.login.pwd}") String password,
                       @NotNull(message = "{error.login.role}") String role);
     BUserEntity save(BUserEntity bUserEntity);
+    int updateNotNull(BUserEntity t);
 }

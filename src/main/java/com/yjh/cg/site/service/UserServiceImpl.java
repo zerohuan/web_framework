@@ -31,6 +31,12 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.save(bUserEntity);
     }
 
+    @Transactional
+    @Override
+    public int updateNotNull(BUserEntity t) {
+        return this.userRepository.updateNotNull(t);
+    }
+
     public UserRepository getUserRepository() {
         return userRepository;
     }
