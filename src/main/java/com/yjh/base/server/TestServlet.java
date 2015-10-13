@@ -21,11 +21,15 @@ import java.util.List;
 public class TestServlet extends HttpServlet {
     private static Logger logger = LogManager.getLogger();
 
+    private static int count;
+
+    private final static int id = count++;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("get method1");
         PrintWriter out = resp.getWriter();
-        out.println(System.currentTimeMillis());
+        out.println("[Id: " + id + "] " + System.currentTimeMillis());
         ClassLoader classLoader = this.getClass().getClassLoader();
         while(classLoader != null) {
             logger.debug(classLoader.getClass().getCanonicalName());

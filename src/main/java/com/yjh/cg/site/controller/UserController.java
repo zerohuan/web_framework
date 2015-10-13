@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -37,8 +38,27 @@ public class UserController {
     @RequestMapping(value="info/{id}", method = RequestMethod.GET)
     public String useInfo(@PathVariable(value = "id") BUserEntity userEntity,
                                Map<String, Object> model) {
+        if(userEntity == null)
+            throw new RuntimeException();
         model.put("user", userEntity);
         return "user/info";
+    }
+
+    @RequestMapping(value="info/{id}", method = RequestMethod.POST)
+    public String useInfo(@PathVariable(value = "id") long id,
+                               BUserEntity userEntity, Map<String, Object> model) {
+        logger.debug(userEntity.getUsername());
+        model.put("user", this.userService.save(userEntity));
+        return "user/info";
+    }
+
+    /**
+     * logout and clear session's attributes
+     */
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public RedirectView logout(HttpSession session) {
+        session.invalidate();
+        return new RedirectView("/", false, false);
     }
 
     /**
@@ -53,6 +73,8 @@ public class UserController {
     @ResponseBody
     public BResponseData login(String username, String password, String role,
                                final HttpSession session) {
+        logger.debug(username);
+
         return new BRequestHandler((responseData) -> {
             BUserEntity user = UserController.this.userService.login(username, password, role);
             responseData.setData(user);
@@ -60,6 +82,7 @@ public class UserController {
             //authentic success add username and role into session attributes
             session.setAttribute("username", user.getUsername());
             session.setAttribute("role", user.getRole());
+            session.setAttribute("user", user);
         }).execute();
     }
 

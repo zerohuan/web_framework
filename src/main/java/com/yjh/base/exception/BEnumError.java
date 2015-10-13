@@ -6,7 +6,8 @@ package com.yjh.base.exception;
  * Created by yjh on 15-10-9.
  */
 public enum  BEnumError {
-    VALIDATION_ERROR("验证错误", 10001);
+    VALIDATION_ERROR("验证错误", 10001),
+    LOGIN_ERROR("请先登录", 10002);
     private String message;
     private int code;
 

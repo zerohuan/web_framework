@@ -12,5 +12,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface UserRepository extends PagingAndSortingRepository<BUserEntity, Long> {
     BUserEntity getByUsernameAndPasswordAndRole(String username, String password, String role);
-
+    BUserEntity save(BUserEntity userEntity);
 }

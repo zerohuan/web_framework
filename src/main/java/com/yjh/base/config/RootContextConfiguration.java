@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.yjh.base.exception.CostumeExceptionResolver;
+import com.yjh.cg.site.repository.CustomRepositoryFactoryBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.MessageSource;
@@ -21,6 +22,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
@@ -44,12 +46,16 @@ import java.util.Map;
 )
 @ComponentScan(
         basePackages = "com",
-        excludeFilters = @ComponentScan.Filter(Controller.class)
+        excludeFilters = {
+                @ComponentScan.Filter(Controller.class),
+                @ComponentScan.Filter(ControllerAdvice.class)
+        }
 )
 @EnableJpaRepositories(
         basePackages = {"com.yjh.base.site.repository", "com.yjh.cg.site.repository"},
         entityManagerFactoryRef = "entityManagerFactoryBean",
-        transactionManagerRef = "jpaTransactionManager"
+        transactionManagerRef = "jpaTransactionManager",
+        repositoryFactoryBeanClass = CustomRepositoryFactoryBean.class
 )
 public class RootContextConfiguration {
     private static Logger logger = LogManager.getLogger();

@@ -1,7 +1,10 @@
 package com.yjh.cg.site.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * User Entity
@@ -12,7 +15,8 @@ import java.sql.Timestamp;
 @Table(name = "b_user", schema = "", catalog = "cg")
 public class BUserEntity {
     private long id;
-    private Timestamp birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
     private String cooperation;
     private Timestamp createTime;
     private String department;
@@ -42,11 +46,11 @@ public class BUserEntity {
 
     @Basic
     @Column(name = "birthday")
-    public Timestamp getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Timestamp birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

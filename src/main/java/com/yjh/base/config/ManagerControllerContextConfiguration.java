@@ -1,4 +1,4 @@
-package com.yjh.cg.config;
+package com.yjh.base.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +27,7 @@ import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ViewResolver;
@@ -51,9 +52,12 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan(
-        basePackages = "com.yjh.cg.site",
+        basePackages = {"com.yjh.cg.site","com.yjh.base.site"},
         useDefaultFilters = false,
-        includeFilters = @ComponentScan.Filter(Controller.class)
+        includeFilters = {
+                @ComponentScan.Filter(Controller.class),
+                @ComponentScan.Filter(ControllerAdvice.class)
+        }
 )
 @Profile("production")
 @PropertySource(value = "classpath:setting.properties", ignoreResourceNotFound = false)

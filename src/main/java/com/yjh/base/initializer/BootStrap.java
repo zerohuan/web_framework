@@ -1,7 +1,7 @@
 package com.yjh.base.initializer;
 
+import com.yjh.base.config.ManagerControllerContextConfiguration;
 import com.yjh.base.config.RootContextConfiguration;
-import com.yjh.base.config.WebControllerContextConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.WebApplicationInitializer;
@@ -34,24 +34,29 @@ public class BootStrap implements WebApplicationInitializer {
         container.addListener(new ContextLoaderListener(rootContext));
 
         //create a dispatcherServlet has own children context.
-        //servlet in framework
-        AnnotationConfigWebApplicationContext servletContext = new AnnotationConfigWebApplicationContext();
-        servletContext.register(WebControllerContextConfiguration.class);
-        //add a dispatcherServlet for mvc controllers
-        ServletRegistration.Dynamic dispatcher = container.addServlet("mvcServlet",
-                new DispatcherServlet(servletContext));
-        dispatcher.setLoadOnStartup(1);
+        //The configuration of cg project
+        AnnotationConfigWebApplicationContext cgContext = new AnnotationConfigWebApplicationContext();
+        cgContext.register(ManagerControllerContextConfiguration.class);
+
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(cgContext);
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+        ServletRegistration.Dynamic dispatcherCG = container.addServlet("cgServlet",
+                dispatcherServlet);
+        dispatcherCG.setLoadOnStartup(1);
         //File upload configuration
         File path = new File(container.getRealPath("/tmp/web_yjh_files/"));
 
         if(path.exists() || path.mkdirs()) {
-            dispatcher.setMultipartConfig(new MultipartConfigElement(
+            dispatcherCG.setMultipartConfig(new MultipartConfigElement(
                     path.getAbsolutePath(), 200_971_520L, 401_943_040L, 0
             ));
         } else {
             throw new ServletException("Cannot set multipartConfig because of tmp path");
         }
-        dispatcher.addMapping("/b/*");
+        dispatcherCG.setInitParameter("projectName", "HiCG");
+        dispatcherCG.addMapping("/m/*");
 
+        //active profile
+        cgContext.getEnvironment().setActiveProfiles("production");
     }
 }

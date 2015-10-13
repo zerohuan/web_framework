@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * This filter add the fish tag for logging.
  * Be careful use async request.
- * This filter don't care it's order, so you can use annotation.
+ * This filter don't care it's order, so you can use security.
  *
  * Created by yjh on 2015/9/17.
  */
