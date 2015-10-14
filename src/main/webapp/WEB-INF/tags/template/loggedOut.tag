@@ -1,9 +1,9 @@
-<%@ tag body-content="scriptless" trimDirectiveWhitespaces="true" %>
+<%@ tag pageEncoding="UTF-8" body-content="scriptless" trimDirectiveWhitespaces="true" %>
 <%@ attribute name="htmlTitle" type="java.lang.String" rtexprvalue="true"
               required="true" %>
 <%@ attribute name="bodyTitle" type="java.lang.String" rtexprvalue="true"
               required="true" %>
-<%@ include file="/WEB-INF/b/base.jspf" %>
+<%@ include file="/WEB-INF/m/base.jspf" %>
 <template:main htmlTitle="${htmlTitle}" bodyTitle="${bodyTitle}">
     <jsp:attribute name="headContent">
     </jsp:attribute>

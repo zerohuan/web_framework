@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.persistence.ValidationMode;
 import javax.sql.DataSource;
@@ -204,5 +206,26 @@ public class RootContextConfiguration {
         SimpleMappingExceptionResolver resolver = new CostumeExceptionResolver();
 
         return resolver;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Bean
+    public OpenEntityManagerInViewInterceptor openEntityManagerInViewInterceptor() {
+        OpenEntityManagerInViewInterceptor openEntityManagerInViewInterceptor =
+                new OpenEntityManagerInViewInterceptor();
+        openEntityManagerInViewInterceptor.setEntityManagerFactory(this.entityManagerFactoryBean().getObject());
+        return openEntityManagerInViewInterceptor;
+    }
+
+    @Bean
+    public RequestMappingHandlerMapping RequestMappingHandlerMapping() {
+        RequestMappingHandlerMapping requestMappingHandlerMapping =
+                new RequestMappingHandlerMapping();
+        Object[] interceptors = new Object[]{this.openEntityManagerInViewInterceptor()};
+        requestMappingHandlerMapping.setInterceptors(interceptors);
+        return requestMappingHandlerMapping;
     }
 }

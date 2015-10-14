@@ -3,6 +3,7 @@ package com.yjh.cg.site.service;
 import com.yjh.cg.site.entities.BUserEntity;
 import org.springframework.validation.annotation.Validated;
 
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
  * Created by yjh on 15-10-8.
  */
 @Validated
+@Transactional
 public interface UserService {
     @NotNull(message = "{error.login.fail}")
     BUserEntity login(@NotNull(message = "{error.login.username}") String username,

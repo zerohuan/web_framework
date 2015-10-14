@@ -3,7 +3,6 @@ package com.yjh.cg.site.service;
 import com.yjh.cg.site.entities.BUserEntity;
 import com.yjh.cg.site.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
@@ -19,19 +18,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BUserEntity login(String username, String password, String role) {
-        BUserEntity user =
-                this.userRepository.getByUsernameAndPasswordAndRole(username, password, role);
-
-        return user;
+        return this.userRepository.getByUsernameAndPasswordAndRole(username, password, role);
     }
 
-    @Transactional
     @Override
     public BUserEntity save(BUserEntity bUserEntity) {
         return this.userRepository.save(bUserEntity);
     }
 
-    @Transactional
     @Override
     public int updateNotNull(BUserEntity t) {
         return this.userRepository.updateNotNull(t);

@@ -69,6 +69,8 @@ public class UserController {
 
     /**
      * sign in
+     * http://localhost:8080/m/user/login?username=YJH&password=123&role=SYSTEM_ADMIN
+     *
      * @param username length:1-20
      * @param password length:1-20
      * @param role {@link com.yjh.cg.site.entities.BRole}

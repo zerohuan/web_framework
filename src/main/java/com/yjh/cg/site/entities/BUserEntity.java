@@ -1,10 +1,11 @@
 package com.yjh.cg.site.entities;
 
+import com.yjh.base.site.entities.BAuditedEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * User Entity
@@ -13,17 +14,14 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "b_user", schema = "", catalog = "cg")
-public class BUserEntity {
-    private long id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+public class BUserEntity extends BAuditedEntity {
+
     private Date birthday;
     private String cooperation;
-    private Timestamp createTime;
     private String department;
     private String email;
     private Long headImg;
     private String idNumber;
-    private Timestamp modifyTime;
     private String password;
     private String phone;
     private String role;
@@ -33,18 +31,24 @@ public class BUserEntity {
     private String username;
     private String qq;
     private String realName;
+    private List<BCourseEntity> courses;
 
-    @Id
-    @Column(name = "id")
-    public long getId() {
-        return id;
+    @Transient
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "b_course_user",
+            joinColumns = {@JoinColumn(name="user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "course_id")}
+    )
+    public List<BCourseEntity> getCourses() {
+        return courses;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCourses(List<BCourseEntity> courses) {
+        this.courses = courses;
     }
 
     @Basic
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birthday")
     public Date getBirthday() {
         return birthday;
@@ -62,16 +66,6 @@ public class BUserEntity {
 
     public void setCooperation(String cooperation) {
         this.cooperation = cooperation;
-    }
-
-    @Basic
-    @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
     }
 
     @Basic
@@ -112,16 +106,6 @@ public class BUserEntity {
 
     public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
-    }
-
-    @Basic
-    @Column(name = "modify_time")
-    public Timestamp getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Timestamp modifyTime) {
-        this.modifyTime = modifyTime;
     }
 
     @Basic
@@ -217,19 +201,17 @@ public class BUserEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BUserEntity)) return false;
+        if (!super.equals(o)) return false;
 
         BUserEntity that = (BUserEntity) o;
 
-        if (id != that.id) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
         if (cooperation != null ? !cooperation.equals(that.cooperation) : that.cooperation != null) return false;
-        if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         if (department != null ? !department.equals(that.department) : that.department != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (headImg != null ? !headImg.equals(that.headImg) : that.headImg != null) return false;
         if (idNumber != null ? !idNumber.equals(that.idNumber) : that.idNumber != null) return false;
-        if (modifyTime != null ? !modifyTime.equals(that.modifyTime) : that.modifyTime != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
         if (role != null ? !role.equals(that.role) : that.role != null) return false;
@@ -238,22 +220,19 @@ public class BUserEntity {
         if (teacherId != null ? !teacherId.equals(that.teacherId) : that.teacherId != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (qq != null ? !qq.equals(that.qq) : that.qq != null) return false;
-        if (realName != null ? !realName.equals(that.realName) : that.realName != null) return false;
+        return !(realName != null ? !realName.equals(that.realName) : that.realName != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = super.hashCode();
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (cooperation != null ? cooperation.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (department != null ? department.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (headImg != null ? headImg.hashCode() : 0);
         result = 31 * result + (idNumber != null ? idNumber.hashCode() : 0);
-        result = 31 * result + (modifyTime != null ? modifyTime.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);

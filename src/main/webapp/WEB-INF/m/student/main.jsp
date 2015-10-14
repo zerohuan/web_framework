@@ -1,11 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: yjh
-  Date: 15-10-10
-  Time: 下午6:59
+  Date: 15-10-12
+  Time: 下午3:03
   To change this template use File | Settings | File Templates.
 --%>
-<template:basic htmlTitle="学生端主页" bodyTitle="学生端">
-
+<template:basic htmlTitle="${projectName}" bodyTitle="">
+  这是学生端首页
 </template:basic>
-

@@ -1,6 +1,6 @@
 package com.yjh.cg.site.service;
 
-import com.yjh.cg.site.entities.BCourseStudentEntity;
+import com.yjh.cg.site.entities.BCourseUserEntity;
 import com.yjh.cg.site.repository.CourseStudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class CourseStudentServiceImpl implements CourseStudentService {
     private CourseStudentRepository courseStudentRepository;
 
     @Override
-    public List<BCourseStudentEntity> list(long userId) {
+    public List<BCourseUserEntity> list(long userId) {
         return ServiceUtil.toList(
                 courseStudentRepository.getByUserIdOrderByCreateDateDesc(userId)
         );

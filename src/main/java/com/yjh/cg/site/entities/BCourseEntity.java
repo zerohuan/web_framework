@@ -1,31 +1,22 @@
 package com.yjh.cg.site.entities;
 
+import com.yjh.base.site.entities.BAuditedEntity;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by yjh on 15-10-10.
  */
 @Entity
 @Table(name = "b_course", schema = "", catalog = "cg")
-public class BCourseEntity {
-    private long id;
+public class BCourseEntity extends BAuditedEntity {
     private String courseName;
     private String teacherIds;
     private Timestamp startTime;
     private int courseHours;
-    private Timestamp createDate;
-    private Timestamp lastModifiedDate;
-
-    @Id
-    @Column(name = "id")
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    private List<BCourseItemEntity> courseItemEntityList;
 
     @Basic
     @Column(name = "course_name")
@@ -67,54 +58,37 @@ public class BCourseEntity {
         this.courseHours = courseHours;
     }
 
-    @Basic
-    @Column(name = "create_date")
-    public Timestamp getCreateDate() {
-        return createDate;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "course_id")
+    public List<BCourseItemEntity> getCourseItemEntityList() {
+        return courseItemEntityList;
     }
 
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
-    }
-
-    @Basic
-    @Column(name = "last_modified_date")
-    public Timestamp getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Timestamp lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+    public void setCourseItemEntityList(List<BCourseItemEntity> courseItemEntityList) {
+        this.courseItemEntityList = courseItemEntityList;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BCourseEntity)) return false;
 
         BCourseEntity that = (BCourseEntity) o;
 
-        if (id != that.id) return false;
         if (courseHours != that.courseHours) return false;
-        if (courseName != null ? !courseName.equals(that.courseName) : that.courseName != null) return false;
-        if (teacherIds != null ? !teacherIds.equals(that.teacherIds) : that.teacherIds != null) return false;
-        if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
-        if (createDate != null ? !createDate.equals(that.createDate) : that.createDate != null) return false;
-        if (lastModifiedDate != null ? !lastModifiedDate.equals(that.lastModifiedDate) : that.lastModifiedDate != null)
-            return false;
+        if (!courseName.equals(that.courseName)) return false;
+        if (!teacherIds.equals(that.teacherIds)) return false;
+        return startTime.equals(that.startTime);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (courseName != null ? courseName.hashCode() : 0);
-        result = 31 * result + (teacherIds != null ? teacherIds.hashCode() : 0);
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
+        int result = courseName.hashCode();
+        result = 31 * result + teacherIds.hashCode();
+        result = 31 * result + startTime.hashCode();
         result = 31 * result + courseHours;
-        result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
-        result = 31 * result + (lastModifiedDate != null ? lastModifiedDate.hashCode() : 0);
         return result;
     }
 }
