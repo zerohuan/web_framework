@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.yjh.base.exception.CostumeExceptionResolver;
-import com.yjh.base.util.CustomRepositoryFactoryBean;
+import com.yjh.base.site.repository.CustomRepositoryFactoryBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.MessageSource;

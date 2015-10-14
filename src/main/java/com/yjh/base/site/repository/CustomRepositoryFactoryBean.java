@@ -1,4 +1,4 @@
-package com.yjh.base.util;
+package com.yjh.base.site.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;

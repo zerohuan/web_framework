@@ -1,4 +1,4 @@
-package com.yjh.base.util;
+package com.yjh.base.site.repository;
 
 import com.yjh.base.site.repository.CustomRepository;
 import org.apache.logging.log4j.LogManager;
@@ -44,8 +44,7 @@ public class CustomRepositoryImpl <T, ID extends Serializable>
     }
 
     /**
-     * update when the field is not null,
-     * It just supports Entity with @Id on method,
+     * update when the field is not null, it just supports Entity with @Id on method,
      * not supports @EmbeddedId and @Id on field.
      *
      * @param t entity for update
