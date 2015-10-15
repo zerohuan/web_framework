@@ -79,7 +79,7 @@
 			width: 30%;
 		}
 		
-		/* at ipad (portrait) view convert all widgets to 100% width */
+		/* at ipad (portrait) view converters all widgets to 100% width */
 		section#widget-grid article {
 			display: block;
 			float: none;

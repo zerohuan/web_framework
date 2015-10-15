@@ -184,7 +184,7 @@ public class ManagerControllerContextConfiguration extends WebMvcConfigurerAdapt
     }
 
     /**
-     * Add a DomainClassConverter, it will convert request parameters and path parameters to Entities.
+     * Add a DomainClassConverter, it will converters request parameters and path parameters to Entities.
      * It belongs to Spring DATA's support for Spring MVC.
      *
      * @param registry must be instance of FormattingConversionService, otherwise DATA JPA converter

@@ -20,7 +20,7 @@ public class BResponseData implements Serializable {
 
     /**
      * Some type can not be converted to json,
-     * convert that kind of data to the type being able to converted to json
+     * converters that kind of data to the type being able to converted to json
      * @param data the data to be wrapped
      */
     @SuppressWarnings("unchecked")

@@ -1,6 +1,6 @@
 package com.yjh.base.site.entities;
 
-import com.yjh.base.convert.InstantConverter;
+import com.yjh.base.converters.InstantConverter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;

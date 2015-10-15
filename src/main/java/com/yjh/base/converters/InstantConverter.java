@@ -1,4 +1,4 @@
-package com.yjh.base.convert;
+package com.yjh.base.converters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Convert;
