@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.yjh.base.exception.CostumeExceptionResolver;
 import com.yjh.base.site.repository.CustomRepositoryFactoryBean;
+import com.yjh.cg.site.server.MessageServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.MessageSource;
@@ -209,8 +210,12 @@ public class RootContextConfiguration {
     }
 
     /**
+     * TODO Test it, include JSP in transaction
      *
-     * @return
+     * @return OpenEntityManagerInViewInterceptor can binds a JPA EntityManager to the
+     * thread for the entire processing of the request.
+     * EntityManager in View" pattern, i.e. to allow for lazy loading in
+     * web views despite the original transactions already being completed.
      */
     @Bean
     public OpenEntityManagerInViewInterceptor openEntityManagerInViewInterceptor() {
@@ -227,5 +232,18 @@ public class RootContextConfiguration {
         Object[] interceptors = new Object[]{this.openEntityManagerInViewInterceptor()};
         requestMappingHandlerMapping.setInterceptors(interceptors);
         return requestMappingHandlerMapping;
+    }
+
+    /**
+     * Add MessageServer into the register of single Bean:
+     * MessageServer has a SpringConfigurator, so you can @Inject or @Autowire in it.
+     * But you still cannot inject it to other beans, because it's not in the register of
+     * single beans. So, defining a MessageServer in the RootContextConfiguration can
+     * add it in.
+     *
+     */
+    @Bean
+    public MessageServer messageServer() {
+        return new MessageServer();
     }
 }

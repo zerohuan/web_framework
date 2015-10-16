@@ -27,6 +27,32 @@
         <url-pattern>/test/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Client1</servlet-name>
+        <servlet-class>com.yjh.cg.site.server.ClientServlet</servlet-class>
+        <init-param>
+            <param-name>userId</param-name>
+            <param-value>1</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Client1</servlet-name>
+        <url-pattern>/client1</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Client2</servlet-name>
+        <servlet-class>com.yjh.cg.site.server.ClientServlet</servlet-class>
+        <init-param>
+            <param-name>userId</param-name>
+            <param-value>2</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Client2</servlet-name>
+        <url-pattern>/client2</url-pattern>
+    </servlet-mapping>
+
     <!-- session config -->
     <session-config>
         <session-timeout>30</session-timeout> <!-- default value of tomcat -->
