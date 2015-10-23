@@ -41,7 +41,7 @@ public class ClientServlet extends HttpServlet {
 
         try {
             URI uri = new URI("ws", "localhost:8080", path, null, null);
-            this.session = ContainerProvider.getWebSocketContainer()
+            session = ContainerProvider.getWebSocketContainer()
                     .connectToServer(this, uri);
             logger.debug(session.getId());
         } catch (IOException | URISyntaxException | DeploymentException e) {
@@ -52,7 +52,7 @@ public class ClientServlet extends HttpServlet {
     @Override
     public void destroy() {
         try {
-            this.session.close();
+            session.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class ClientServlet extends HttpServlet {
         messageJson.setMessage(req.getParameter("message"));
         messageJson.setReplyUserId(Long.valueOf(req.getParameter("replyUserId")));
 
-        try(OutputStream outputStream = this.session.getBasicRemote().getSendStream()) {
+        try(OutputStream outputStream = session.getBasicRemote().getSendStream()) {
             mapper.writeValue(outputStream, messageJson);
             outputStream.flush();
         }

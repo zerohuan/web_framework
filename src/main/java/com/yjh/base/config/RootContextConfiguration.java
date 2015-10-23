@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.yjh.base.exception.CostumeExceptionResolver;
+import com.yjh.base.site.ClusterEventMulticaster;
 import com.yjh.base.site.repository.CustomRepositoryFactoryBean;
 import com.yjh.cg.site.server.MessageServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +24,13 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -38,6 +47,7 @@ import javax.sql.DataSource;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 /**
  * The parent of all of other configuration
@@ -46,6 +56,11 @@ import java.util.Map;
  * Created by yjh on 2015/9/19.
  */
 @Configuration
+@EnableAsync(
+        proxyTargetClass = true,
+        order =  Ordered.HIGHEST_PRECEDENCE
+)
+@EnableScheduling
 @EnableTransactionManagement(
         mode = AdviceMode.PROXY, proxyTargetClass = false,
         order = Ordered.LOWEST_PRECEDENCE
@@ -63,12 +78,14 @@ import java.util.Map;
         transactionManagerRef = "jpaTransactionManager",
         repositoryFactoryBeanClass = CustomRepositoryFactoryBean.class
 )
-public class RootContextConfiguration {
+public class RootContextConfiguration implements AsyncConfigurer, SchedulingConfigurer {
     private static Logger logger = LogManager.getLogger();
+    private static final Logger schedulingLogger =
+            LogManager.getLogger(logger.getName() + ".[scheduling]");
 
     @Bean
     public ObjectMapper objectMapper()
-    {
+    { 
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
@@ -245,5 +262,54 @@ public class RootContextConfiguration {
     @Bean
     public MessageServer messageServer() {
         return new MessageServer();
+    }
+
+    @Bean
+    public ThreadPoolTaskScheduler taskScheduler()
+    {
+        logger.info("Setting up thread pool task scheduler with 20 threads.");
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(20);
+        scheduler.setThreadNamePrefix("task-");
+        scheduler.setAwaitTerminationSeconds(60);
+        scheduler.setWaitForTasksToCompleteOnShutdown(true);
+        scheduler.setErrorHandler(t -> schedulingLogger.error(
+                "Unknown error occurred while executing task.", t
+        ));
+        scheduler.setRejectedExecutionHandler(
+                (r, e) -> schedulingLogger.error(
+                        "Execution of task {} was rejected for unknown reasons.", r
+                )
+        );
+        return scheduler;
+    }
+
+    @Override
+    public Executor getAsyncExecutor()
+    {
+        Executor executor = this.taskScheduler();
+        logger.info("Configuring asynchronous method executor {}.", executor);
+        return executor;
+    }
+
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar registrar)
+    {
+        TaskScheduler scheduler = this.taskScheduler();
+        logger.info("Configuring scheduled method executor {}.", scheduler);
+        registrar.setTaskScheduler(scheduler);
+    }
+
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return (throwable, method, objects)->schedulingLogger.error(throwable);
+    }
+
+    /**
+     * Add a ClusterEventMulticaster
+     */
+    @Bean
+    public ClusterEventMulticaster applicationEventMulticaster() {
+        return new ClusterEventMulticaster();
     }
 }

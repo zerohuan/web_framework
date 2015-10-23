@@ -19,7 +19,7 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.WeakHashMap;
 
 /**
  * <h1>WebSocket server for message system</h1>
@@ -60,7 +60,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @ServerEndpoint(value = "/message/{userId}", configurator = SpringConfigurator.class)
 public class MessageServer implements DisposableBean {
-    private static Map<Long, Session> userSessions = new ConcurrentHashMap<>();
+    private static Map<Long, Session> userSessions = new WeakHashMap<>();
     private static ObjectMapper mapper = new ObjectMapper();
     private static Logger logger = LogManager.getLogger();
 
@@ -70,7 +70,6 @@ public class MessageServer implements DisposableBean {
     @Override
     public void destroy() throws Exception {
         userSessions.clear();
-        userSessions = null;
     }
 
     /**
@@ -84,10 +83,10 @@ public class MessageServer implements DisposableBean {
         logger.debug("open session: userId:" + userId + " sessionId" + session.getId());
 
         List<BMessageEntity> unReadMessages =
-                this.messageService.getMessageByIsRead(userId, BMessageState.UNREAD);
+                messageService.getMessageByIsRead(userId, BMessageState.UNREAD);
 
         if(unReadMessages.size() > 0) {
-            this.sendJsonMessage(session, userId, unReadMessages);
+            sendJsonMessage(session, userId, unReadMessages);
         }
 
         userSessions.put(userId, session);
@@ -111,12 +110,12 @@ public class MessageServer implements DisposableBean {
             long replyUserId = messageJson.getReplyUserId();
 
             //save new message
-            BMessageEntity messageEntity = this.messageService.saveMessage(userId, replyUserId, messageJson.getMessage());
+            BMessageEntity messageEntity = messageService.saveMessage(userId, replyUserId, messageJson.getMessage());
             if(messageEntity != null) {
                 //send
                 Session replySession = userSessions.get(replyUserId);
                 if(replySession != null) {
-                    this.sendJsonMessage(replySession, userId, messageEntity);
+                    sendJsonMessage(replySession, userId, messageEntity);
                 }
             }
         } catch (IOException e) {
@@ -149,7 +148,7 @@ public class MessageServer implements DisposableBean {
             session.getBasicRemote()
                     .sendText(MessageServer.mapper.writeValueAsString(object));
         } catch (IOException e) {
-            this.handleException(e, userId);
+            handleException(e, userId);
         }
     }
 
