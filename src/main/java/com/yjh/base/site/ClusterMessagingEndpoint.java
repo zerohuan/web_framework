@@ -36,7 +36,7 @@ public class ClusterMessagingEndpoint
     @OnOpen
     public void onOpen(Session session, @PathParam("securityCode") String securityCode)
     {
-        if(!StringUtils.isEmpty(securityCode) && !"a83".equals(securityCode))
+        if(!StringUtils.isEmpty(securityCode) && !ClusterManager.NODE_ID.equals(securityCode))
         {
             try
             {
@@ -49,7 +49,7 @@ public class ClusterMessagingEndpoint
                 logger.error(e);
             }
         }
-        logger.info("Successful connection ");
+        logger.debug("Successful connection ");
         this.session = session;
         this.multicaster.registerEndpoint(this);
     }

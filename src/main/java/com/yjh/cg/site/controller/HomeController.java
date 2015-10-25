@@ -18,7 +18,7 @@ public class HomeController
 {
     @Inject ApplicationEventPublisher publisher;
 
-    @RequestMapping("")
+    @RequestMapping("login")
     @ResponseBody
     public String login(HttpServletRequest request)
     {
