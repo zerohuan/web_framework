@@ -35,6 +35,7 @@ public class CompressFilter implements Filter {
         //set charset before invoke request.getParameter
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=UTF-8");
+        response.setHeader("Cache-Control", "Public");
 
         //check Accept-Encoding Header contains gzip or not
         String acceptEncodingHeader = request.getHeader("Accept-Encoding");

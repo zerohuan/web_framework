@@ -87,7 +87,7 @@
 		color:#5F5F5F;
 	}
 	body {
-		background: url('../img/backgrounds/mesh.png') #333;
+		background: #e6eaf0; /*#*/
 	}
 	
 	h1, h2, h3, h4, h5, h6, .my-profile span, .number-stats {
@@ -220,7 +220,7 @@
 	
 	#header-toolbar h1 {
 		float:left;
-		color: #F0F0F0;
+		color: #303030;
 		font-size: 16px;
 		line-height: 40px;
 		margin: 0;
@@ -1812,7 +1812,7 @@
 	}
 	
 	.info-slider > div.ui-slider-range {
-		border-color: ##004795;
+		border-color: #004795;
 	}
 	
 	.warning-slider > div.ui-slider-range {
