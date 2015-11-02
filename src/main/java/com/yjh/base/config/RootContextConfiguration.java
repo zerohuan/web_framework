@@ -11,10 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.AdviceMode;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -72,6 +69,7 @@ import java.util.concurrent.Executor;
                 @ComponentScan.Filter(ControllerAdvice.class)
         }
 )
+@Import({SecurityConfiguration.class})
 @EnableJpaRepositories(
         basePackages = {"com.yjh.base.site.repository", "com.yjh.cg.site.repository"},
         entityManagerFactoryRef = "entityManagerFactoryBean",

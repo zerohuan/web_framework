@@ -4,6 +4,8 @@ import com.yjh.base.site.entities.BAuditedEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.security.auth.Subject;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "b_user", schema = "", catalog = "cg")
-public class BUserEntity extends BAuditedEntity {
+public class BUserEntity extends BAuditedEntity implements Principal {
 
     private Date birthday;
     private String cooperation;
@@ -32,6 +34,16 @@ public class BUserEntity extends BAuditedEntity {
     private String qq;
     private String realName;
     private List<BCourseEntity> courses;
+
+    @Override
+    public String getName() {
+        return username;
+    }
+
+    @Override
+    public boolean implies(Subject subject) {
+        return false;
+    }
 
     @Transient
     @ManyToMany(fetch = FetchType.LAZY)

@@ -2,6 +2,9 @@ package com.yjh.cg.site.service;
 
 import com.yjh.cg.site.entities.BUserEntity;
 import com.yjh.cg.site.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -12,9 +15,14 @@ import javax.inject.Inject;
  * Created by yjh on 15-10-8.
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     @Inject
     UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
 
     @Override
     public BUserEntity login(String username, String password, String role) {

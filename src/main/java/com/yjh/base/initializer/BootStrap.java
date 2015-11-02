@@ -2,17 +2,16 @@ package com.yjh.base.initializer;
 
 import com.yjh.base.config.ManagerControllerContextConfiguration;
 import com.yjh.base.config.RootContextConfiguration;
+import com.yjh.base.filter.PreSecurityLoggingFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 import java.io.File;
 
 /**
@@ -20,6 +19,7 @@ import java.io.File;
  *
  * Created by yjh on 2015/9/19.
  */
+@Order(1)
 public class BootStrap implements WebApplicationInitializer {
     private static Logger logger = LogManager.getLogger();
 
@@ -31,6 +31,8 @@ public class BootStrap implements WebApplicationInitializer {
         //Use ContextLoaderListener to create a root context, it is father of contexts used in dispatcherServlet
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(RootContextConfiguration.class);
+        //avoid override
+        rootContext.setAllowBeanDefinitionOverriding(false);
         container.addListener(new ContextLoaderListener(rootContext));
 
         //create a dispatcherServlet has own children context.
@@ -58,5 +60,11 @@ public class BootStrap implements WebApplicationInitializer {
 
         //active profile
         cgContext.getEnvironment().setActiveProfiles("production");
+
+        //config fish label filter
+        FilterRegistration.Dynamic registration = container.addFilter(
+                "preSecurityLoggingFilter", new PreSecurityLoggingFilter()
+        );
+        registration.addMappingForUrlPatterns(null, false, "/*");
     }
 }

@@ -9,7 +9,7 @@ import javax.inject.Inject;
  * Created by yjh on 15-10-31.
  */
 @Component
-//@Scope("prototype")
+@Scope("prototype")
 public class TestD {
     @Inject
     private TestE testE;
