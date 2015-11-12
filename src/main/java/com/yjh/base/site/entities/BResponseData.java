@@ -58,4 +58,20 @@ public class BResponseData implements Serializable {
                 ", errCode=" + errCode +
                 '}';
     }
+
+    public static class BResult implements Serializable {
+        private boolean success;
+
+        public BResult(boolean success) {
+            this.success = success;
+        }
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public void setSuccess(boolean success) {
+            this.success = success;
+        }
+    }
 }

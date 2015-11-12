@@ -8,5 +8,5 @@ import com.yjh.base.site.entities.BResponseData;
  * Created by yjh on 15-10-9.
  */
 public interface BNeedHandle {
-    void needHandle(BResponseData responseData);
+    void needHandle(BResponseData responseData) throws Exception;
 }

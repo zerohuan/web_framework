@@ -1,0 +1,154 @@
+
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>科技信息搜索引擎</title>
+<!-- Bootstrap -->
+<link href="./css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+ <!--[if lt IE 9]>
+     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+     <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link href='http://fonts.googleapis.com/css?family=Kreon:300,400,700' rel='stylesheet' type='text/css'>
+<link href="./css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- start plugins -->
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+	<script>
+		$(function() {
+			var pull 		= $('#pull');
+				menu 		= $('nav ul');
+				menuHeight	= menu.height();
+			$(pull).on('click', function(e) {
+				e.preventDefault();
+				menu.slideToggle();
+			});
+			$(window).resize(function(){
+        		var w = $(window).width();
+        		if(w > 320 && menu.is(':hidden')) {
+        			menu.removeAttr('style');
+        		}
+    		});
+		});
+	</script>
+
+<!-- start light_box -->
+<link rel="stylesheet" type="text/css" href="./css/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="./js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="./js/jquery.fancybox-1.2.1.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("div.fancyDemo a").fancybox();
+		});
+	</script>
+
+</head>
+<body>
+<div class="header_bg" id="home"><!-- start header -->
+<div class="container">
+	<div class="row header text-center specials">
+		<div class="h_logo">
+			<a href="index.html"><img src="./images/logo.png" alt="" class="responsive"/></a>
+		</div>
+		<nav class="top-nav">
+			<ul class="top-nav nav_list">
+				<li><input style="visibility: hidden;width: 200px;" type="text" value="请输入检索内容" /></li>
+				<li><a href="portfolio.html">科技论坛</a></li>
+				<li class="page-scroll"><a href="#">自动抓取</a></li>
+				<li class="logo page-scroll"><a title="hexa" href="index.html"><img src="./images/logo.png" alt="" class="responsive"/></a></li>
+			    <li class="page-scroll"><a href="blog.html">&nbsp;&nbsp;主题检索</a></li>
+				<li class="page-scroll"><a href="#contact">联系我们</a></li>
+				<li><input id="search-input" type="text" value="检索关键词" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '检索关键词';}"><input id="search-btn" type="button" value="检索" onClick="searchByInput()"></li>
+			</ul>
+			<a href="#" id="pull"><img src="./images/nav-icon.png" title="menu" /></a>
+		</nav>
+		<div class="clearfix"></div>
+	</div>
+</div>
+</div>
+<div class="container"><!-- start main -->
+	<div class="main row">
+ 	 	<h2 class="style">科技论坛</h2>
+	 	 <div class="grids_of_4 row">
+				<div class="col-md-8 contact_left">
+					<form method="post">
+						<input id="count" name="count" type="text" value="抓取网页数量上限" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '数量上限';}">
+						<input id="mins" name="count" type="text" value="抓取时间上限[单位：分钟]" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '时间上限';}">
+						<input id="keys" name="count" type="text" value="主题/关键字" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '主题/关键字';}">
+						<span class="pull-right"><input type="button" value="开始抓取" onClick="startCrawel()"></span>
+					</form>
+				</div>
+				<div class="col-md-4  contact_right">
+					<p style="word-break: break-all;">自动抓取功能，请填写抓取的网页数量上限和本次抓取时间上限来确定抓取任务的停止时间。您可以通过设置“主题/关键字”来抓取对应主题的网页。</p>
+				</div>
+				<div class="clear"></div>
+			</div>
+		
+	</div>
+</div><!-- end main -->
+<div class="footer_bg" id="contact"><!-- start footer -->
+<div class="container">
+	<div class="row footer">
+		<div class="col-md-8 contact_left">
+			<h3>联系我们</h3>
+			<p>留下您的宝贵意见和联系方式，让事物更美好</h4>
+			<form method="post" action="">
+				<input type="text" value="姓名 (必填)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '姓名';}">
+				<input type="text" value="电子邮件 (必填)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '电子邮件';}">
+				<input type="text" value="主题" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '主题';}">
+				<textarea onfocus="if(this.value == '您的意见....') this.value='';" onblur="if(this.value == '') this.value='您的意见....;" >您的意见....</textarea>
+				<span class="pull-right"><input type="submit" value="提交" onClick="contact()"></span>
+			</form>
+		</div>
+		<div class="col-md-4  contact_right">
+			<p style="word-break: break-all;"><span>南京大学信息管理学院： </span> 南京大学信息管理学院历史悠久，其前身可追溯至1927年金陵大学图书馆学系和1940年增设的图书馆学专科，是全国最早兴办图书情报的教学机构之一。从1978年开始，陆续重建了图书馆学、情报学教育，逐渐拥有了图书馆学、情报学和档案学的本科、硕士和博士等各级学位授予权，建有信息管理与信息系统、图书馆学、档案学和编辑出版学4个本科专业，图书馆学、情报学、档案学、编辑出版学和信息资源管理5个硕士点和博士点，并且是国内最早拥有情报学博士点教育的5所高校之一，建立了体系完备的图书情报教育模式。 </p>
+			<ul class="list-unstyled address">
+				<li><i class="fa fa-map-marker"></i><span>信息集成·科技创新</span></li>
+				<li><i class="fa fa-envelope"></i><a href="mailto:yanjinheng@qq.com">info(at)yanjinheng@qq.com</a></li>
+			</ul>
+		</div>		
+	</div>
+</div>
+</div>
+<div class="footer1_bg"><!-- start footer1 -->
+	<div class="container">
+		<div class="row  footer">
+			<div class="copy text-center">
+				<p class="link"><span>&#169; All rights reserved | Template by&nbsp;<a href="http://im.nju.edu.cn/" target="_blank"> 南京大学信息管理学院</a></span></p>
+				<a href="#home" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"> </span></a>
+			</div>
+		</div>
+		<script type="text/javascript">
+				$(function() {
+				  $('a[href*=#]:not([href=#])').click(function() {
+				    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+			
+				      var target = $(this.hash);
+				      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+				      if (target.length) {
+				        $('html,body').animate({
+				          scrollTop: target.offset().top
+				        }, 1000);
+				        return false;
+				      }
+				    }
+				  });
+				});
+
+				
+		</script>
+		<!---- start-smoth-scrolling---->		
+	</div>
+</div>
+<script type="text/javascript" src="./js/search.js"></script>
+</body>
+</html>

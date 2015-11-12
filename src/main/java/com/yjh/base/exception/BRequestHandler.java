@@ -30,7 +30,7 @@ public class BRequestHandler {
             //Validation exception
             responseData.setData(e.getConstraintViolations());
             responseData.setErrCode(BEnumError.VALIDATION_ERROR.getCode());
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new BSystemException(e);
         }
 

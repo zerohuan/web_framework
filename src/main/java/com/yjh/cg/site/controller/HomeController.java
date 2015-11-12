@@ -14,11 +14,12 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@SuppressWarnings("unused")
 public class HomeController
 {
     @Inject ApplicationEventPublisher publisher;
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     @ResponseBody
     public String login(HttpServletRequest request)
     {

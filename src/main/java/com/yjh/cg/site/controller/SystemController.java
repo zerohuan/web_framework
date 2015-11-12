@@ -3,6 +3,8 @@ package com.yjh.cg.site.controller;
 import com.yjh.base.exception.BRequestHandler;
 import com.yjh.base.site.entities.BResponseData;
 import com.yjh.cg.site.entities.BUserEntity;
+import com.yjh.cg.site.entities.BUserRole;
+import com.yjh.cg.site.service.AuthenticationService;
 import com.yjh.cg.site.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * 登录，注销等系统接口
@@ -26,11 +29,14 @@ public class SystemController {
 
     @Inject
     private UserService userService;
+    @Inject
+    private AuthenticationService authenticationService;
 
     /**
      * logout and clear session's attributes
      */
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    @Deprecated
+    @RequestMapping(value = "logout1", method = RequestMethod.GET)
     public RedirectView logout(HttpSession session) {
         session.invalidate();
         return new RedirectView("/", false, false);
@@ -46,7 +52,8 @@ public class SystemController {
      * @param session add automatically by spring
      * @return user data when success, error message when fail
      */
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @Deprecated
+    @RequestMapping(value = "login1", method = RequestMethod.GET)
     @ResponseBody
     public BResponseData login(String username, String password, String role,
                                final HttpSession session) {
@@ -61,5 +68,43 @@ public class SystemController {
             session.setAttribute("role", user.getRole());
             session.setAttribute("user", user);
         }).execute();
+    }
+
+
+    @RequestMapping(value = "signup", method = RequestMethod.GET)
+    public String signUp(Map<String, Object> model) {
+        model.put("signUpForm", new SignUpForm());
+        return "signup";
+    }
+
+    @RequestMapping(value = "signup", method = RequestMethod.POST)
+    public String signUp(SignUpForm form, Map<String, Object> model) {
+        BUserEntity userEntity = new BUserEntity();
+        userEntity.setUsername(form.getUsername());
+        userEntity.setRole(BUserRole.USER);
+        BUserEntity user = authenticationService.saveUser(userEntity, form.getNewPassword());
+
+        return "student/main/" + user.getId();
+    }
+
+    static class SignUpForm {
+        private String username;
+        private String newPassword;
+
+        public String getNewPassword() {
+            return newPassword;
+        }
+
+        public void setNewPassword(String newPassword) {
+            this.newPassword = newPassword;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
     }
 }

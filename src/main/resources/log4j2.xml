@@ -17,17 +17,17 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="Console" />
         </Root>
-        <Logger name="com.yjh.base" level="debug" additivity="false">
+        <Logger name="com.yjh.base" level="info" additivity="false">
             <AppenderRef ref="BaseFileAppender" />
             <AppenderRef ref="Console">
                 <!--<MarkerFilter marker="BASE_CONSOLE" onMatch="NEUTRAL"-->
                               <!--onMismatch="DENY" />-->
             </AppenderRef>
         </Logger>
-        <Logger name="org.apache" level="debug">
+        <Logger name="org.apache" level="info">
             <AppenderRef ref="BaseFileAppender" />
             <AppenderRef ref="Console" />
         </Logger>

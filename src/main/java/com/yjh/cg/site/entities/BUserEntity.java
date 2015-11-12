@@ -2,10 +2,13 @@ package com.yjh.cg.site.entities;
 
 import com.yjh.base.site.entities.BAuditedEntity;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import javax.security.auth.Subject;
-import java.security.Principal;
+import java.nio.file.attribute.UserPrincipal;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +19,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "b_user", schema = "", catalog = "cg")
-public class BUserEntity extends BAuditedEntity implements Principal {
+public class BUserEntity extends BAuditedEntity
+        implements Authentication, UserPrincipal {
 
     private Date birthday;
     private String cooperation;
@@ -24,9 +28,9 @@ public class BUserEntity extends BAuditedEntity implements Principal {
     private String email;
     private Long headImg;
     private String idNumber;
-    private String password;
+    private byte[] password;
     private String phone;
-    private String role;
+    private BUserRole role;
     private String school;
     private Integer sex;
     private Long teacherId;
@@ -35,14 +39,47 @@ public class BUserEntity extends BAuditedEntity implements Principal {
     private String realName;
     private List<BCourseEntity> courses;
 
+    private boolean authenticated;
+
     @Override
-    public String getName() {
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    @Transient
+    public Object getCredentials() {
+        return password;
+    }
+
+    @Override
+    @Transient
+    public Object getDetails() {
         return username;
     }
 
     @Override
-    public boolean implies(Subject subject) {
-        return false;
+    @Transient
+    public Object getPrincipal() {
+        return username;
+    }
+
+    @Override
+    @Transient
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    @Override
+    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+        Arrays.asList();
+    }
+
+    @Override
+    @Transient
+    public String getName() {
+        return username;
     }
 
     @Transient
@@ -122,11 +159,11 @@ public class BUserEntity extends BAuditedEntity implements Principal {
 
     @Basic
     @Column(name = "password")
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
     }
 
@@ -142,11 +179,12 @@ public class BUserEntity extends BAuditedEntity implements Principal {
 
     @Basic
     @Column(name = "role")
-    public String getRole() {
+    @Enumerated(EnumType.STRING)
+    public BUserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(BUserRole role) {
         this.role = role;
     }
 
@@ -211,49 +249,30 @@ public class BUserEntity extends BAuditedEntity implements Principal {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BUserEntity)) return false;
-        if (!super.equals(o)) return false;
-
-        BUserEntity that = (BUserEntity) o;
-
-        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-        if (cooperation != null ? !cooperation.equals(that.cooperation) : that.cooperation != null) return false;
-        if (department != null ? !department.equals(that.department) : that.department != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (headImg != null ? !headImg.equals(that.headImg) : that.headImg != null) return false;
-        if (idNumber != null ? !idNumber.equals(that.idNumber) : that.idNumber != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-        if (role != null ? !role.equals(that.role) : that.role != null) return false;
-        if (school != null ? !school.equals(that.school) : that.school != null) return false;
-        if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
-        if (teacherId != null ? !teacherId.equals(that.teacherId) : that.teacherId != null) return false;
-        if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (qq != null ? !qq.equals(that.qq) : that.qq != null) return false;
-        return !(realName != null ? !realName.equals(that.realName) : that.realName != null);
-
+    public int hashCode() {
+        return username.hashCode();
     }
 
     @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (cooperation != null ? cooperation.hashCode() : 0);
-        result = 31 * result + (department != null ? department.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (headImg != null ? headImg.hashCode() : 0);
-        result = 31 * result + (idNumber != null ? idNumber.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (school != null ? school.hashCode() : 0);
-        result = 31 * result + (sex != null ? sex.hashCode() : 0);
-        result = 31 * result + (teacherId != null ? teacherId.hashCode() : 0);
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (qq != null ? qq.hashCode() : 0);
-        result = 31 * result + (realName != null ? realName.hashCode() : 0);
-        return result;
+    public boolean equals(Object other) {
+        return other instanceof BUserEntity &&
+                ((BUserEntity)other).username.equals(this.username);
+    }
+
+    @Override
+    @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")
+    protected BUserEntity clone()
+    {
+        try {
+            return (BUserEntity)super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e); // not possible
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.username;
     }
 }

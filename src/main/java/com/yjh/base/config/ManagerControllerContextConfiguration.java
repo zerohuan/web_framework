@@ -52,7 +52,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan(
-        basePackages = {"com.yjh.cg.site","com.yjh.base.site"},
+        basePackages = {"com.yjh.cg.site","com.yjh.base.site","com.yjh.search.site"},
         useDefaultFilters = false,
         includeFilters = {
                 @ComponentScan.Filter(Controller.class),

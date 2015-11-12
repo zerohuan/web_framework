@@ -69,9 +69,9 @@ import java.util.concurrent.Executor;
                 @ComponentScan.Filter(ControllerAdvice.class)
         }
 )
-@Import({SecurityConfiguration.class})
+@Import({SearchEngineConfiguration.class})
 @EnableJpaRepositories(
-        basePackages = {"com.yjh.base.site.repository", "com.yjh.cg.site.repository"},
+        basePackages = {"com.yjh.base.site.repository", "com.yjh.cg.site.repository", "com.yjh.search.site.repository"},
         entityManagerFactoryRef = "entityManagerFactoryBean",
         transactionManagerRef = "jpaTransactionManager",
         repositoryFactoryBeanClass = CustomRepositoryFactoryBean.class
@@ -141,7 +141,8 @@ public class RootContextConfiguration implements AsyncConfigurer, SchedulingConf
                 new LocalContainerEntityManagerFactoryBean();
         factoryBean.setJpaVendorAdapter(adapter);
         factoryBean.setDataSource(this.springJpaDataSource());
-        factoryBean.setPackagesToScan("com.yjh.base.site", "com.yjh.cg.site");
+        factoryBean.setPackagesToScan("com.yjh.base.site",
+                "com.yjh.cg.site", "com.yjh.search.site");
         factoryBean.setValidationMode(ValidationMode.NONE);
         factoryBean.setJpaPropertyMap(properties);
 

@@ -26,7 +26,7 @@ public class BootStrap implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext container) throws ServletException {
         logger.info("Initializer startUp...");
-        container.getServletRegistration("default").addMapping("/resource/*");
+        container.getServletRegistration("default").addMapping("/resources/*", "*.html");
 
         //Use ContextLoaderListener to create a root context, it is father of contexts used in dispatcherServlet
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();

@@ -13,5 +13,5 @@ import com.yjh.cg.site.entities.BUserEntity;
 public interface UserRepository extends CustomRepository<BUserEntity, Long> {
     BUserEntity getByUsernameAndPasswordAndRole(String username, String password, String role);
     BUserEntity save(BUserEntity userEntity);
-
+    BUserEntity getByUsername(String username);
 }

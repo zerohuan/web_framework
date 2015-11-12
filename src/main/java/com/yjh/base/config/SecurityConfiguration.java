@@ -1,14 +1,17 @@
 package com.yjh.base.config;
 
+import com.yjh.cg.site.service.AuthenticationService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
 /**
  * Spring security configuration
@@ -16,27 +19,26 @@ import javax.sql.DataSource;
  * Created by yjh on 15-11-1.
  */
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String PREFIX_URL_MANAGE = "/m";
 
     @Inject
-    private DataSource dataSource;
+    private AuthenticationService authenticationService;
+
+    @Bean
+    protected SessionRegistry sessionRegistryImpl() {
+        return new SessionRegistryImpl();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder builder) throws Exception {
-        builder
-                .jdbcAuthentication()
-                    .dataSource(this.dataSource)
-                .usersByUsernameQuery("SELECT username, password " +
-                        "FROM b_user where username = ?")
-                .authoritiesByUsernameQuery("SELECT username, role " +
-                        "FROM b_user where username = ?")
-                .passwordEncoder(new BCryptPasswordEncoder());
+        builder.authenticationProvider(authenticationService);
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
+        web.ignoring().antMatchers("/resources/**", "/m/signup/**", "/m/login/**");
     }
 
     @Override
@@ -61,6 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement()
                     .sessionFixation().changeSessionId()
                     .maximumSessions(1).maxSessionsPreventsLogin(true)
+                    .sessionRegistry(sessionRegistryImpl())
                 .and().and().csrf().disable()
                 //启动remember-me，一周内有效
                 .rememberMe().tokenValiditySeconds(7 * 24 * 60 * 60);

@@ -1,6 +1,6 @@
 package com.yjh.test.forSpring.config;
 
-import com.yjh.test.forSpring.site.testBean.*;
+import com.yjh.test.forSpring.site.testCircularDependency.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

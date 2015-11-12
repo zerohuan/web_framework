@@ -11,6 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.6.2</jackson.version>
         <spring.framework.version>4.2.1.RELEASE</spring.framework.version>
+        <lucene.version>5.3.1</lucene.version>
     </properties>
   <dependencies>
     <dependency>
@@ -268,7 +269,35 @@
           <version>${spring.framework.version}</version>
           <scope>compile</scope>
       </dependency>
-
+      <dependency>
+          <groupId>org.jsoup</groupId>
+          <artifactId>jsoup</artifactId>
+          <version>1.8.3</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-core</artifactId>
+          <version>${lucene.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-analyzers-common</artifactId>
+          <version>${lucene.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-queryparser</artifactId>
+          <version>${lucene.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.bluestemsoftware.open.maven.plugin</groupId>
+          <artifactId>checksum-plugin</artifactId>
+          <version>1.0.0.1</version>
+      </dependency>
   </dependencies>
   <build>
     <finalName>framework</finalName>
